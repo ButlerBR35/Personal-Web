@@ -1,0 +1,52 @@
+body {
+  margin: 0;
+  background-color: black; 
+}
+
+.back-video {
+position: fixed;
+top: 0;                 /* 對齊螢幕最上方 */
+left: 0;                /* 對齊螢幕最左側 */
+width: 100vw;           /* 寬度強制為視窗寬度的 100% */
+height: 100vh;          /* 高度強制為視窗高度的 100% */
+object-fit: cover;      /* 保持比例放大填滿螢幕，不會變形 */
+z-index: -1;            /* 放到最底層，作為背景 */
+pointer-events: none;   /* 讓滑鼠完全無法點擊 */
+}
+
+.scroll-down {
+writing-mode: vertical-rl;  /* 【關鍵】設定為直書，且從右向左換行 (Right to Left) */
+letter-spacing: 2px;        /* （選擇性）稍微拉開字距，讓直式閱讀更舒服 */
+color: white;
+font-size: 12px;
+font-family:"NotoSansHK-VF",system-ui;
+position: relative;
+top: 450px;
+left: 10px;
+text-shadow: 1px 1px 4px black;
+opacity: 50%;
+}
+
+.highlight{
+color:rgb(154, 124, 107); 
+}
+
+.text-box-title{
+position: fixed; 
+text-align: end;
+font-stretch: 100%;
+top: 150px;
+right: 100px;
+font-size: 24px;
+text-shadow: 1px 1px 4px black;
+
+/* 視覺與排版微調 */
+height: 80vh;    /* 給予足夠的高度讓文字延伸 */
+color: white;    /* 確保文字在影片上方是白色的 */
+z-index: 10;     /* 確保文字層級高於影片 (大於 -1 即可) */
+}
+
+/* (選擇性) 如果你想拉開標題跟副標題之間的距離 */
+.hero-title {
+margin-left: 20px; /* 直式排版中，margin-left 會變成推開左邊那行的距離 */
+}
