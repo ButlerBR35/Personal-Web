@@ -10,21 +10,8 @@ left: 0;                /* 對齊螢幕最左側 */
 width: 100vw;           /* 寬度強制為視窗寬度的 100% */
 height: 100vh;          /* 高度強制為視窗高度的 100% */
 object-fit: cover;      /* 保持比例放大填滿螢幕，不會變形 */
-z-index: -1;            /* 放到最底層，作為背景 */
+z-index: 0;             /* 背景層：位於漸層下方 */
 pointer-events: none;   /* 讓滑鼠完全無法點擊 */
-}
-
-.scroll-down {
-writing-mode: vertical-rl;  /* 【關鍵】設定為直書，且從右向左換行 (Right to Left) */
-letter-spacing: 2px;        /* （選擇性）稍微拉開字距，讓直式閱讀更舒服 */
-color: white;
-font-size: 12px;
-font-family:"NotoSansHK-VF",system-ui;
-position: relative;
-top: 450px;
-left: 10px;
-text-shadow: 1px 1px 4px black;
-opacity: 50%;
 }
 
 .highlight{
@@ -35,8 +22,8 @@ color:rgb(154, 124, 107);
 position: fixed; 
 text-align: end;
 font-stretch: 100%;
-top: 150px;
-right: 100px;
+top: 300px;
+right: 200px;
 font-size: 24px;
 text-shadow: 1px 1px 4px black;
 
@@ -49,4 +36,127 @@ z-index: 10;     /* 確保文字層級高於影片 (大於 -1 即可) */
 /* (選擇性) 如果你想拉開標題跟副標題之間的距離 */
 .hero-title {
 margin-left: 20px; /* 直式排版中，margin-left 會變成推開左邊那行的距離 */
+}
+
+/* 覆蓋整個畫面，不影響滑鼠操作 */
+.floating-lines {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  overflow: hidden;
+  pointer-events: none;
+
+  /* 修改這裡可以換顏色 */
+  --line-color: #ffffff;
+}
+
+/* 左側提示：文字在上、箭頭在下 */
+.scroll-hint {
+  position: fixed;
+  left: 40px; /* 整組往右移 */
+  top: 50%;
+  z-index: 10;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+
+  color: #fff;
+  pointer-events: none;
+}
+
+.scroll-hint-text {
+  writing-mode: vertical-rl;
+  font-size: 12px;
+  letter-spacing: 3px;
+  line-height: 2;
+}
+
+/* 浮動向下箭頭 */
+.scroll-hint-line {
+  position: relative;
+  display: block;
+  width: 1px;
+  height: 70px;
+  background: #fff;
+  animation: scroll-line-float 2.4s ease-in-out infinite;
+}
+
+/* 箭頭尖端會跟著直線一起浮動 */
+.scroll-hint-line::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 9px;
+  height: 9px;
+  border-right: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+@keyframes scroll-line-float {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+
+  50% {
+    transform: translateY(12px);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-hint-line {
+    animation: none;
+    opacity: 0.8;
+  }
+}
+/* 上下浮動＋明暗變化 */
+@keyframes line-floating {
+  0%, 100% {
+    transform: translateY(-30px);
+    opacity: 0.15;
+  }
+
+  50% {
+    transform: translateY(30px);
+    opacity: 0.8;
+  }
+}
+
+/* 配合系統「減少動態效果」設定 */
+@media (prefers-reduced-motion: reduce) {
+  .floating-lines span {
+    animation: none;
+    opacity: 0.35;
+  }
+}
+
+/* 圖層由下到上：背景 0 → 漸層 1 → 首頁文字 2 */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    rgba(4, 9, 15, 0) 32%,
+    rgba(4, 9, 15, 0.18) 48%,
+    rgba(4, 9, 15, 0.65) 70%,
+    rgba(4, 9, 15, 0.9) 100%
+  );
+}
+
+/* 背景圖片若使用此容器，也放在漸層下方 */
+.site-background {
+  z-index: 0;
+}
+
+#site-content {
+  position: relative;
+  z-index: 2;
 }

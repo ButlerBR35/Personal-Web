@@ -1,0 +1,250 @@
+/* 動圖在上，文字在下 */
+#intro-loader .intro-status {
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* GIF 大小 */
+.intro-gif {
+  display: block;
+  width: 160px;
+  max-width: 60vw;
+  height: auto;
+  object-fit: contain;
+}
+
+:root {
+  --intro-color: #bda68c;
+
+  /* 換成自己的圖片，例如 url("images/character.webp") */
+  --intro-image: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--intro-color);
+  color: #352d27;
+  font-family: "Microsoft JhengHei", sans-serif;
+}
+
+/* 背景 */
+.site-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--intro-color);
+}
+
+.site-background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--intro-image);
+  background-position: center;
+  background-size: cover;
+  opacity: 0.25;
+}
+
+/* 載入畫面 */
+#intro-loader[hidden] {
+  display: none;
+}
+
+#intro-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background: rgb(189 166 140 / 22%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  opacity: 1;
+
+  transition:
+    opacity 0.65s ease,
+    backdrop-filter 0.65s ease;
+}
+
+.intro-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 24px;
+  color: #fff8ee;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  text-shadow: 0 0 10px rgb(255 248 238 / 35%);
+  animation: intro-appear 0.65s ease both;
+}
+
+/* 旋轉載入符號 */
+.intro-spinner {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  border: 2px solid rgb(255 248 238 / 30%);
+  border-top-color: #fff8ee;
+  border-radius: 50%;
+  animation: intro-spin 0.9s linear infinite;
+}
+
+/* 載入畫面淡出 */
+#intro-loader.is-leaving {
+  opacity: 0;
+  backdrop-filter: blur(0);
+  -webkit-backdrop-filter: blur(0);
+  pointer-events: none;
+}
+
+/* 首頁進場 */
+#site-content {
+  opacity: 1;
+  transform: none;
+  filter: none;
+
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+    filter 0.8s ease;
+}
+
+html.intro-running #site-content {
+  opacity: 0;
+  transform: translateY(18px);
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+html.intro-running,
+html.intro-running body {
+  overflow: hidden;
+}
+
+/* 動畫 */
+@keyframes intro-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes intro-breathe {
+  0%, 100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes intro-appear {
+  from {
+    opacity: 0;
+    filter: blur(5px);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+/* 示範首頁，可換成你自己的樣式 */
+.demo-home {
+  min-height: 100vh;
+  display: grid;
+  align-content: center;
+  padding: 10vw;
+}
+
+.demo-home h1 {
+  margin: 0 0 16px;
+  font-size: clamp(36px, 7vw, 80px);
+}
+
+.demo-home p {
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+/* 減少動態效果 */
+@media (prefers-reduced-motion: reduce) {
+  #intro-loader,
+  #site-content {
+    transition: none;
+  }
+
+  .intro-status,
+  .intro-spinner,
+  .intro-message {
+    animation: none;
+  }
+
+  html.intro-running #site-content {
+    transform: none;
+    filter: none;
+  }
+}
+
+/* 外層不移動，避免影響文字定位與圖層 */
+#site-content {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  transition: none;
+}
+
+html.intro-running #site-content {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  pointer-events: none;
+}
+
+/* 文字由下往上快速淡入 */
+#site-content .text-box-title > * {
+  opacity: 1;
+  transform: translateY(0);
+
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 三段文字依序出現 */
+#site-content .text-box-title > :nth-child(2) {
+  transition-delay: 0.08s;
+}
+
+#site-content .text-box-title > :nth-child(3) {
+  transition-delay: 0.16s;
+}
+
+/* Loading 期間，文字先藏在下方 */
+html.intro-running #site-content .text-box-title > * {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: none;
+}
+
+/* Loading 結束後才顯示 Scroll Down */
+html.intro-running #site-content .scroll-hint {
+  visibility: hidden;
+}
+
+/* 配合系統減少動態效果設定 */
+@media (prefers-reduced-motion: reduce) {
+  #site-content .text-box-title > * {
+    transition: none;
+  }
+
+  html.intro-running #site-content .text-box-title > * {
+    transform: none;
+  }
+}

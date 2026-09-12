@@ -1,13 +1,29 @@
 <!DOCTYPE html>
-<html lang="zh-TW,">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>巴特 / Bart / バット</title>
     <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="loading.css">
 </head>
 <body>
-    <div>
+<div id="intro-loader" hidden role="status" aria-live="polite">
+  <div class="intro-status">
+    <!-- GIF 動圖 -->
+    <img
+      class="intro-gif"
+      src="揮手貼圖_巴特.gif"
+      alt=""
+      width="160"
+      height="160"
+    >
+  </div>
+</div>
+<!-- 連接 JS：保留在載入畫面後方 -->
+<script src="loading.js"></script>
+<!-- 首頁文字與箭頭共用進場動畫容器 -->
+<div id="site-content">
         <div class="text-box-title">
             <p>歡迎來到我的空間</p>
             <h1 class="sayhi">
@@ -18,11 +34,14 @@
             <h4 class="call">
                 你可以直接叫我<span class="highlight">巴特</span>或<span class="highlight">棕響</span>就好
             </h4>
-        </div>
-        <p class="scroll-down">
-            Scroll Down
-            </p>
-    </div>
+        </div><!-- /text-box-title -->
+<!-- 浮動箭頭 -->
+<div class="scroll-hint">
+  <span class="scroll-hint-text">Scroll Down</span>
+  <span class="scroll-hint-line" aria-hidden="true"></span>
+</div>
+</div><!-- /site-content -->
+<!-- 背景必須放在文字容器外，與漸層分開堆疊 -->
 <video class="back-video" autoplay muted loop playsinline>
     <source src="巴特委託公開版.mp4" type="video/mp4">
 </video>
