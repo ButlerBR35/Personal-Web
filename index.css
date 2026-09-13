@@ -1,98 +1,356 @@
+/* ===== 基本設定 ===== */
+:root {
+  /* 由 index.js 更新 */
+  --right-opacity: 1;
+  --gray-position: 50%;
+
+  --header-side: 150px;    /* 左右等寬留白，目錄對齊視窗中心 */
+  --nav-height: 72px;       /* 目錄列高度 */
+  --nav-gap: 48px;          /* 選項之間的距離 */
+  --nav-font-size: 16px;    /* 選項文字大小 */
+  --nav-accent: #ddc4ad;    /* 滑鼠移入時的文字、底線顏色 */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-  background-color: black; 
+  background: #000;
+  color: #fff;
+  font-family: "Microsoft JhengHei", sans-serif;
 }
 
+/* ===== 背景影片：最底層 ===== */
 .back-video {
-position: fixed;
-top: 0;                 /* 對齊螢幕最上方 */
-left: 0;                /* 對齊螢幕最左側 */
-width: 100vw;           /* 寬度強制為視窗寬度的 100% */
-height: 100vh;          /* 高度強制為視窗高度的 100% */
-object-fit: cover;      /* 保持比例放大填滿螢幕，不會變形 */
-z-index: 0;             /* 背景層：位於漸層下方 */
-pointer-events: none;   /* 讓滑鼠完全無法點擊 */
-}
-
-.highlight{
-color:rgb(154, 124, 107); 
-}
-
-.text-box-title{
-position: fixed; 
-text-align: end;
-font-stretch: 100%;
-top: 300px;
-right: 200px;
-font-size: 24px;
-text-shadow: 1px 1px 4px black;
-
-/* 視覺與排版微調 */
-height: 80vh;    /* 給予足夠的高度讓文字延伸 */
-color: white;    /* 確保文字在影片上方是白色的 */
-z-index: 10;     /* 確保文字層級高於影片 (大於 -1 即可) */
-}
-
-/* (選擇性) 如果你想拉開標題跟副標題之間的距離 */
-.hero-title {
-margin-left: 20px; /* 直式排版中，margin-left 會變成推開左邊那行的距離 */
-}
-
-/* 覆蓋整個畫面，不影響滑鼠操作 */
-.floating-lines {
   position: fixed;
   inset: 0;
-  z-index: 5;
-  overflow: hidden;
-  pointer-events: none;
 
-  /* 修改這裡可以換顏色 */
-  --line-color: #ffffff;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  z-index: 0;
+  pointer-events: none;
 }
 
-/* 左側提示：文字在上、箭頭在下 */
-.scroll-hint {
+/* 固定在視窗最上方 */
+.site-header {
   position: fixed;
-  left: 40px; /* 整組往右移 */
-  top: 50%;
-  z-index: 10;
+  inset: 0 0 auto;
+  height: var(--nav-height);
+  padding: 0 var(--header-side);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+
+  /* 高於網頁內容，低於 Loading 畫面 */
+  z-index: 100;
+
+  /* 最後的 0.55 控制黑色背景濃度 */
+  background: rgba(8, 12, 18, 0.55);
+
+  /* 背景模糊程度 */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* 選項排列 */
+.top-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--nav-gap);
+
+  width: max-content;
+  min-width: 0;
+  max-width: 100%;
+  height: 100%;
+  margin-inline: auto;
+  padding: 0;
+
+  /* 小螢幕可左右滑動，不擠壓文字 */
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+
+.top-nav a {
+  position: relative;
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: center;
+  height: 100%;
+
+  color: #e8e5e1;
+  font-size: var(--nav-font-size);
+  font-weight: 500;
+  letter-spacing: 2px;
+  white-space: nowrap;
+  text-decoration: none;
+
+  transition: color 0.25s ease;
+}
+
+/* 選項下方的短底線 */
+.top-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 15px;
+
+  height: 2px;
+  background: var(--nav-accent);
+
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.25s ease;
+}
+
+.top-nav a:hover,
+.top-nav a:focus-visible {
+  color: var(--nav-accent);
+}
+
+.top-nav a:hover::after,
+.top-nav a:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.top-nav a:focus-visible {
+  outline: 2px solid var(--nav-accent);
+  outline-offset: -5px;
+}
+
+/* 點擊目錄後，卡片上方留白，避免被固定目錄列擋住 */
+.directory-card[id] {
+  scroll-margin-top: calc(var(--nav-height) + 28px);
+}
+
+/* 用細框標出目前跳到的卡片 */
+.directory-card:target {
+  border-color: var(--nav-accent);
+  box-shadow: 0 0 0 2px rgba(221, 196, 173, 0.4);
+}
+
+/* Loading 期間，隱藏頂部目錄並禁止操作 */
+html.intro-running .site-header {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* ===== 平板與手機 ===== */
+@media (max-width: 768px) {
+  :root {
+    --nav-gap: 28px;
+    --nav-font-size: 14px;
+  }
+
+
+  .top-nav a {
+    letter-spacing: 1px;
+  }
+
+  .top-nav a::after {
+    bottom: 11px;
+  }
+}
+
+/* 減少動態效果 */
+@media (prefers-reduced-motion: reduce) {
+  .top-nav a,
+  .top-nav a::after {
+    transition: none;
+  }
+}
+
+/* ===== 漸層遮罩：位於影片上方 ===== */
+.video-overlay {
+  position: fixed;
+  inset: 0;
+
+  overflow: hidden;
+  background: transparent;
+
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* 首頁右側深色漸層，左側保持明亮 */
+.video-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    to right,
+    rgba(4, 9, 15, 0) 30%,
+    rgba(4, 9, 15, 0.18) 48%,
+    rgba(4, 9, 15, 0.65) 72%,
+    rgba(4, 9, 15, 0.9) 100%
+  );
+
+  opacity: var(--right-opacity);
+}
+
+/* 下拉後，半透明黑色漸層由底部往上覆蓋 */
+.video-overlay::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 200%;
+
+  background: linear-gradient(
+    to bottom,
+  rgba(0, 0, 0, 0) 0%,
+  rgba(0, 0, 0, 0.5) 50%,
+  rgba(0, 0, 0, 0.5) 100%
+  );
+
+  /*
+    50%：藏在畫面下方
+    -50%：黑色遮罩覆蓋畫面，影片仍然透出
+  */
+  transform: translateY(var(--gray-position));
+}
+
+/* ===== 頁面內容：位於遮罩上方 ===== */
+#site-content,
+html.intro-running #site-content {
+  position: relative;
+  z-index: 2;
+
+  opacity: 1;
+  transform: none;
+  filter: none;
+  transition: none;
+}
+
+/* 首頁 */
+.hero {
+  position: relative;
+
+  min-height: 100vh;
+  min-height: 100svh;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  padding: 80px clamp(24px, 8vw, 160px);
+  background: transparent;
+}
+
+/* ===== 右側文字 ===== */
+.text-box-title {
+  position: relative;
+  inset: auto;
+
+  width: min(100%, 760px);
+  height: auto;
+  margin: 0;
+
+  color: #fff;
+  text-align: right;
+  text-shadow: 1px 2px 6px rgba(0, 0, 0, 0.7);
+}
+
+.text-box-title > p:not(.call) {
+  margin: 0 0 32px;
+  font-size: clamp(18px, 2vw, 28px);
+  line-height: 1.6;
+}
+
+.sayhi {
+  margin: 0;
+  font-size: clamp(32px, 4vw, 64px);
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.call {
+  margin: 32px 0 0;
+  font-size: clamp(16px, 1.6vw, 24px);
+  line-height: 1.8;
+}
+
+.highlight {
+  color: rgb(154, 124, 107);
+}
+
+/* ===== 首頁左下角 Scroll Down ===== */
+.hero .scroll-hint {
+  position: absolute;
+  left: 40px;
+  bottom: 48px;
+  top: auto;
+  right: auto;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 18px;
 
+  width: fit-content;
+  margin: 0;
+
   color: #fff;
-  pointer-events: none;
+  text-decoration: none;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 3;
 }
 
 .scroll-hint-text {
   writing-mode: vertical-rl;
   font-size: 12px;
+  font-weight: 400;
   letter-spacing: 3px;
   line-height: 2;
 }
 
-/* 浮動向下箭頭 */
+.scroll-hint:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 8px;
+}
+
+/* 箭頭直線 */
 .scroll-hint-line {
   position: relative;
   display: block;
+
   width: 1px;
   height: 70px;
   background: #fff;
+
   animation: scroll-line-float 2.4s ease-in-out infinite;
 }
 
-/* 箭頭尖端會跟著直線一起浮動 */
+/* 箭頭尖端 */
 .scroll-hint-line::after {
   content: "";
   position: absolute;
   left: 50%;
   bottom: 0;
+
   width: 9px;
   height: 9px;
+
   border-right: 1px solid #fff;
   border-bottom: 1px solid #fff;
+
   transform: translateX(-50%) rotate(45deg);
 }
 
@@ -108,55 +366,639 @@ margin-left: 20px; /* 直式排版中，margin-left 會變成推開左邊那行�
   }
 }
 
+/* ===== Loading 後文字向上淡入 ===== */
+#site-content .text-box-title > * {
+  opacity: 1;
+  transform: translateY(0);
+
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#site-content .text-box-title > :nth-child(2) {
+  transition-delay: 0.08s;
+}
+
+#site-content .text-box-title > :nth-child(3) {
+  transition-delay: 0.16s;
+}
+
+html.intro-running #site-content .text-box-title > * {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: none;
+}
+
+html.intro-running #site-content {
+  pointer-events: none;
+}
+
+html.intro-running .scroll-hint {
+  visibility: hidden;
+}
+
+html.intro-running,
+html.intro-running body {
+  overflow: hidden;
+}
+
+/* ===== 下方捲動空間 ===== */
+#page-below {
+  display: flex;
+  align-items: center;
+
+  background: transparent;
+
+  /*
+    上下留白：
+    調大會讓目錄距離區域頂部、底部更遠。
+  */
+  padding-block: 90px;
+
+  /*
+    左右留白：
+    最少 24px，隨視窗變成 5vw，最多 100px。
+    想讓目錄更靠近左右邊緣，可把 5vw 改成 3vw。
+  */
+  padding-inline: clamp(24px, 5vw, 100px);
+
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+/* ===== 手機版 ===== */
+@media (max-width: 768px) {
+  .hero {
+    padding: 80px 24px 240px;
+  }
+
+  .hero .scroll-hint {
+    left: 24px;
+    bottom: 32px;
+  }
+}
+
+/* ===== 減少動態效果 ===== */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   .scroll-hint-line {
     animation: none;
     opacity: 0.8;
   }
-}
-/* 上下浮動＋明暗變化 */
-@keyframes line-floating {
-  0%, 100% {
-    transform: translateY(-30px);
-    opacity: 0.15;
+
+  #site-content .text-box-title > * {
+    transition: none;
   }
 
-  50% {
-    transform: translateY(30px);
-    opacity: 0.8;
+  html.intro-running #site-content .text-box-title > * {
+    transform: none;
   }
 }
 
-/* 配合系統「減少動態效果」設定 */
-@media (prefers-reduced-motion: reduce) {
-  .floating-lines span {
-    animation: none;
-    opacity: 0.35;
-  }
+/* ===== 下拉後的六格目錄 ===== */
+
+.directory {
+  /* 整組目錄最大寬度：越大，卡片越大、排列越開 */
+  --menu-max-width: 1600px;
+
+  /* 左右兩張卡片之間的距離 */
+  --card-gap-x: 40px;
+
+  /* 上下兩排卡片之間的距離 */
+  --card-gap-y: 48px;
+
+  /*
+    卡片寬高比例：
+    4 / 3 ＝目前設定，較高的橫向卡片
+    16 / 9＝較扁的橫向卡片
+    1 / 1 ＝正方形
+
+    同樣寬度下，比例越接近正方形，卡片越高。
+  */
+  --card-ratio: 4 / 3;
+
+  /* 卡片圓角：數字越大，角越圓 */
+  --card-radius: 16px;
+
+  /* 卡片文字距離左側、底部的距離 */
+  --card-text-inset: 32px;
+
+  width: 100%;
+  max-width: var(--menu-max-width);
+  margin: 0 auto;
 }
 
-/* 圖層由下到上：背景 0 → 漸層 1 → 首頁文字 2 */
-body::before {
+#directory-title {
+  color: #fff;
+
+  font-weight: 500;
+  letter-spacing: 3px;
+
+  /* 48px 是標題與卡片之間的距離 */
+  margin: 0 0 48px;
+  font-family: "Playfair Display","Shippori Mincho","Noto Serif TC",serif;
+
+  /* 標題字體：最小 20px，最大 36px */
+  font-size: clamp(20px, 3vw, 36px);
+}
+
+/* 電腦版：三欄兩排 */
+.directory-grid {
+  display: grid;
+
+  /* 3 代表每排三格；桌機版維持三欄兩排 */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  column-gap: var(--card-gap-x);
+  row-gap: var(--card-gap-y);
+}
+
+/* 每一格 */
+.directory-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  display: block;
+
+  min-width: 0;
+
+  padding: 0;
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  background: #22282e;
+  color: #fff;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  appearance: none;
+
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+
+  width: 100%;
+  height: auto;
+
+  /* 取消舊的最小高度，讓寬高比例確實生效 */
+  min-height: 0;
+  aspect-ratio: var(--card-ratio);
+
+  border-radius: var(--card-radius);
+}
+
+/* 一般圖片與切換圖片 */
+.card-image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  display: block;
+
+  transition:
+    opacity 0.35s ease,
+    transform 0.5s ease;
+
+  width: 100%;
+  height: 100%;
+
+  /*
+    cover：填滿格子，超出的圖片邊緣會被裁切。
+    contain：顯示完整圖片，但可能留空邊。
+  */
+  object-fit: cover;
+
+  /*
+    控制裁切時保留哪個位置：
+    50% 50% ＝置中
+    50% 30% ＝較靠圖片上方
+    50% 70% ＝較靠圖片下方
+  */
+  object-position: var(--image-position, 50% 50%);
+}
+
+/* 預留換圖功能：目前 HTML 每格只有一張圖；新增第二張時使用此 class。 */
+.card-image-hover {
+  opacity: 0;
+}
+
+/* 整張卡片的壓暗遮罩 */
+.directory-card::before {
   content: "";
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(
-    to right,
-    rgba(4, 9, 15, 0) 32%,
-    rgba(4, 9, 15, 0.18) 48%,
-    rgba(4, 9, 15, 0.65) 70%,
-    rgba(4, 9, 15, 0.9) 100%
-  );
+
+  background: #000;
+  opacity: 0.45;
+
+  transition: opacity 0.3s ease;
 }
 
-/* 背景圖片若使用此容器，也放在漸層下方 */
-.site-background {
-  z-index: 0;
-}
-
-#site-content {
-  position: relative;
+/* 文字底部漸層，亮起時仍保持可讀 */
+.directory-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
   z-index: 2;
+
+  background: linear-gradient(
+    to bottom,
+    transparent 25%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+
+  pointer-events: none;
+}
+
+.card-content {
+  position: absolute;
+
+  z-index: 3;
+
+  display: flex;
+  flex-direction: column;
+
+  pointer-events: none;
+
+  left: var(--card-text-inset);
+  bottom: var(--card-text-inset);
+  right: 70px;
+
+  /* 編號和標題之間的距離 */
+  gap: 10px;
+}
+
+.card-number {
+  color: #ddc4ad;
+
+  letter-spacing: 3px;
+
+  font-size: 13px;
+}
+
+.card-title {
+  font-weight: 600;
+  letter-spacing: 2px;
+
+  /* 卡片標題字體：最小 24px，最大 32px */
+  font-size: clamp(24px, 2vw, 32px);
+}
+
+.card-arrow {
+  position: absolute;
+
+  z-index: 3;
+
+  color: #fff;
+
+  opacity: 0.65;
+
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+
+  right: 30px;
+  bottom: 32px;
+  font-size: 28px;
+}
+
+/* 鍵盤選取、手機點擊後也能展示 */
+.directory-card:focus {
+  transform: translateY(-5px);
+  border-color: #c5aa95;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.3);
+}
+
+.directory-card:focus .card-image-hover {
+  opacity: 1;
+}
+
+.directory-card:focus .card-image {
+  transform: scale(1.04);
+}
+
+.directory-card:focus::before {
+  opacity: 0.08;
+}
+
+.directory-card:focus .card-arrow {
+  opacity: 1;
+  transform: translate(3px, -3px);
+}
+
+.directory-card:focus-visible {
+  outline: 2px solid #e6c8ac;
+  outline-offset: 4px;
+}
+
+/* 滑鼠移入：換圖、變亮、上浮 */
+@media (hover: hover) {
+  .directory-card:hover {
+    transform: translateY(-5px);
+    border-color: #c5aa95;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  .directory-card:hover .card-image-hover {
+    opacity: 1;
+  }
+
+  .directory-card:hover .card-image {
+    transform: scale(1.04);
+  }
+
+  .directory-card:hover::before {
+    opacity: 0.08;
+  }
+
+  .directory-card:hover .card-arrow {
+    opacity: 1;
+    transform: translate(3px, -3px);
+  }
+}
+
+/* 減少動態效果 */
+@media (prefers-reduced-motion: reduce) {
+  .directory-card,
+  .card-image,
+  .directory-card::before,
+  .card-arrow {
+    transition: none;
+  }
+
+  .directory-card:is(:hover, :focus),
+  .directory-card:is(:hover, :focus) .card-image,
+  .directory-card:is(:hover, :focus) .card-arrow {
+    transform: none;
+  }
+}
+
+/* ===== 平板：兩欄 ===== */
+@media (max-width: 1100px) {
+  .directory {
+    --card-gap-x: 28px;
+    --card-gap-y: 32px;
+    --card-text-inset: 26px;
+  }
+
+  .directory-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ===== 手機：一欄 ===== */
+@media (max-width: 560px) {
+  #page-below {
+    padding: 64px 24px;
+  }
+
+  .directory {
+    --card-gap-x: 0px;
+    --card-gap-y: 28px;
+    --card-text-inset: 24px;
+
+    /* 手機版也能單獨調整卡片比例 */
+    --card-ratio: 4 / 3;
+  }
+
+  .directory-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #directory-title {
+    margin-bottom: 32px;
+  }
+
+  .card-arrow {
+    right: 24px;
+    bottom: 24px;
+  }
+}
+
+
+/* ===== 社群列：左側垂直置中，集中在此調整 ===== */
+:root {
+  --social-left: 24px;       /* 距離視窗左側 */
+  --social-logo-size: 25px;  /* LOGO 寬高 */
+  --social-gap: 10px;        /* LOGO 點擊區之間的距離 */
+  --social-hit-size: 44px;   /* 每個連結的點擊範圍 */
+}
+.social-sidebar {
+  position: fixed;
+  left: var(--social-left);
+  top: 50%;
+  right: auto;
+  bottom: auto;
+  transform: translateY(-50%); /* 以整組中心對齊視窗中央 */
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--social-gap);
+  width: var(--social-hit-size);
+  height: auto;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+.social-sidebar a {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: var(--social-hit-size);
+  height: var(--social-hit-size);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, .2);
+  text-decoration: none;
+  transition: background .25s ease, transform .25s ease;
+}
+.social-sidebar img {
+  display: block;
+  width: var(--social-logo-size);
+  height: var(--social-logo-size);
+  object-fit: contain;
+  filter: brightness(0) invert(1); /* 要保留彩色 LOGO 就刪掉這行 */
+  opacity: .7;
+  transition: opacity .25s ease;
+}
+.social-sidebar a:is(:hover, :focus-visible) {
+  background: rgba(0, 0, 0, .55);
+  transform: scale(1.1);
+}
+.social-sidebar a:is(:hover, :focus-visible) img { opacity: 1; }
+.social-sidebar a:focus-visible {
+  outline: 2px solid var(--nav-accent);
+  outline-offset: 3px;
+}
+html.intro-running .social-sidebar {
+  visibility: hidden;
+  pointer-events: none;
+}
+/* 預留社群列空間，避免卡片或文字被圖示擋住 */
+#page-below {
+  padding-left: max(clamp(24px, 5vw, 100px), calc(var(--social-left) + var(--social-hit-size) + 24px));
+}
+.hero {
+  padding-left: max(clamp(24px, 8vw, 160px), calc(var(--social-left) + var(--social-hit-size) + 24px));
+}
+/* 手機維持左側置中，縮小圖示、間距；點擊區仍保留 44px */
+@media (max-width: 768px) {
+  :root { --social-left: 8px; --social-logo-size: 22px; --social-gap: 6px; }
+}
+/* 矮視窗：社群列可單獨捲動，不會被頂部目錄裁掉 */
+@media (max-height: 650px) {
+  .social-sidebar {
+    max-height: calc(100dvh - var(--nav-height) - var(--nav-height) - 24px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+  }
+  .hero .scroll-hint { left: calc(var(--social-left) + var(--social-hit-size) + 24px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .social-sidebar a, .social-sidebar img { transition: none; }
+  .social-sidebar a:is(:hover, :focus-visible) { transform: none; }
+}
+
+/* 中等高度視窗也預留箭頭空間，避免和置中的社群列重疊 */
+@media (max-height: 800px) {
+  .hero .scroll-hint { left: calc(var(--social-left) + var(--social-hit-size) + 24px); }
+}
+
+/* 社群 LOGO：保留原本顏色 */
+.social-sidebar img {
+  filter: none;
+  opacity: 1;
+}
+
+.social-sidebar a,
+.social-sidebar a:is(:hover, :focus-visible) {
+  background: transparent;
+}
+
+/* 六個社群 LOGO 共用一個外框 */
+.social-sidebar {
+  position: fixed; /* 固定在視窗，不跟著頁面捲動 */
+
+  left: var(--social-left, 24px);
+  top: 50%;
+  right: auto;
+  bottom: auto;
+  transform: translateY(-50%);
+
+  z-index: 90;
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: var(--social-gap, 10px);
+
+  /*
+    外框寬度：
+    保留原本寬度，避免向右擋住卡片。
+  */
+  width: var(--social-hit-size, 44px);
+  height: auto;
+  margin: 0;
+  padding: 16px 0; /* 外框上下留白 */
+
+  /* 外框：粗細、顏色透明度 */
+  border: 1px solid rgba(255, 255, 255, 0.45);
+
+  /* 圓角：數字越大越圓 */
+  border-radius: 24px;
+
+  /* 整組淡黑色底，最後的數字控制濃度 */
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* 單個 LOGO 不再加圓形底色 */
+.social-sidebar a,
+.social-sidebar a:is(:hover, :focus-visible) {
+  background: transparent;
+}
+
+/* 保留 LOGO 原色 */
+.social-sidebar img {
+  filter: none;
+  opacity: 1;
+}
+
+
+/* ===== 右上角語言選單：僅保留這一套設定 ===== */
+.site-header > .language-control {
+  position: absolute;
+  top: 0;
+  right: 24px; /* 與右側邊緣的距離 */
+  bottom: auto;
+  left: auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+}
+#language-select {
+  display: block;
+  width: 106px; /* 語言選單寬度 */
+  min-height: 38px;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, .4);
+  border-radius: 8px;
+  background: #20252c;
+  color: #fff;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  appearance: auto;
+}
+#language-select option { background: #20252c; color: #fff; }
+#language-select:focus-visible {
+  outline: 2px solid var(--nav-accent);
+  outline-offset: 3px;
+}
+/* 小螢幕：第一排右側放語言，第二排顯示目錄，窄時可左右滑動。 */
+@media (max-width: 900px) {
+  :root { --nav-height: 112px; --nav-gap: 24px; }
+  .site-header { padding: 56px 20px 0; }
+  .top-nav { height: 56px; }
+  .site-header > .language-control { right: 20px; height: 56px; }
+}
+
+/* 日文、英文標題：字體稍微縮小 */
+html:lang(ja) .sayhi,
+html:lang(en) .sayhi {
+  font-size: clamp(26px, 3vw, 48px);
+  letter-spacing: 0;
+  line-height: 1.5;
+}
+
+/* 桌機版：保留原本 <br>，避免姓名再自動折行 */
+@media (min-width: 1100px) {
+  html:lang(ja) .sayhi,
+  html:lang(en) .sayhi {
+    white-space: nowrap;
+  }
+}
+
+/* 平板、手機：允許換行，避免文字超出畫面 */
+@media (max-width: 1099px) {
+  html:lang(ja) .sayhi,
+  html:lang(en) .sayhi {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  /* 姓名與句尾盡量保持完整 */
+  html:lang(ja) .sayhi {
+    word-break: normal;
+    line-break: strict;
+  }
 }

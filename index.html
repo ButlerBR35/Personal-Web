@@ -1,49 +1,220 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>巴特 / Bart / バット</title>
-    <link rel="stylesheet" href="index.css" />
-    <link rel="stylesheet" href="loading.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>巴特 / Bart / バット</title>
+
+  <link rel="stylesheet" href="loading.css">
+  <link rel="stylesheet" href="index.css?v=8">
+
+  <!-- 等 HTML 建立完成，再啟動捲動漸層 -->
+  <script src="index.js?v=6" defer></script>
+  <!-- 語言切換：HTML 建立完成後才啟動 -->
+  <script src="site-controls.js?v=8" defer></script>
 </head>
+
 <body>
-<div id="intro-loader" hidden role="status" aria-live="polite">
-  <div class="intro-status">
-    <!-- GIF 動圖 -->
-    <img
-      class="intro-gif"
-      src="揮手貼圖_巴特.gif"
-      alt=""
-      width="160"
-      height="160"
-    >
-  </div>
-</div>
-<!-- 連接 JS：保留在載入畫面後方 -->
-<script src="loading.js"></script>
-<!-- 首頁文字與箭頭共用進場動畫容器 -->
-<div id="site-content">
-        <div class="text-box-title">
-            <p>歡迎來到我的空間</p>
-            <h1 class="sayhi">
-                你好
-                <br>
-                我是<span class="highlight">巴特勒·棕響</span>
-            </h1>
-            <h4 class="call">
-                你可以直接叫我<span class="highlight">巴特</span>或<span class="highlight">棕響</span>就好
-            </h4>
-        </div><!-- /text-box-title -->
-<!-- 浮動箭頭 -->
-<div class="scroll-hint">
-  <span class="scroll-hint-text">Scroll Down</span>
-  <span class="scroll-hint-line" aria-hidden="true"></span>
-</div>
-</div><!-- /site-content -->
-<!-- 背景必須放在文字容器外，與漸層分開堆疊 -->
-<video class="back-video" autoplay muted loop playsinline>
+  <!-- 固定背景影片 -->
+  <video class="back-video" autoplay muted loop playsinline aria-hidden="true">
     <source src="巴特委託公開版.mp4" type="video/mp4">
-</video>
+  </video>
+
+<!-- 頂部目錄：中央目錄＋右側語言 -->
+<header class="site-header">
+  <nav class="top-nav" aria-label="主要目錄">
+    <a href="#menu-about">關於我</a>
+    <a href="#menu-character">設定圖</a>
+    <a href="#menu-collection">委託圖集</a>
+    <a href="#menu-photo">攝影作品</a>
+    <a href="#menu-art">繪圖作品</a>
+    <a href="#menu-upcoming">暫未更新</a>
+  </nav>
+
+  <div class="language-control">
+    <select id="language-select" aria-label="選擇語言">
+      <option value="zh">中文</option>
+      <option value="ja">日本語</option>
+      <option value="en">English</option>
+    </select>
+  </div>
+</header>
+
+  <!-- 首頁右側漸層＋下拉半透明黑色遮罩 -->
+  <div class="video-overlay" aria-hidden="true"></div>
+
+  <!-- Loading -->
+  <div id="intro-loader" hidden role="status" aria-live="polite" aria-label="網站載入中">
+    <div class="intro-status">
+      <img class="intro-gif"
+        src="揮手貼圖_巴特.gif"
+        alt=""
+        width="160"
+        height="160"
+      >
+    </div>
+  </div>
+
+  <!-- Loading 程式只載入一次 -->
+  <script src="loading.js"></script>
+
+
+
+
+<!-- 左側社群連結 -->
+<nav class="social-sidebar" aria-label="社群連結">
+
+  <!-- 請填入實際個人社群網址，並在 images/social 放入對應 SVG。 -->
+  <a href="https://www.facebook.com/ba.te.557978/"
+     target="_blank" rel="noopener noreferrer"
+     aria-label="Facebook（另開分頁）" title="Facebook">
+    <img src="2021_Facebook_icon.svg.webp" alt="">
+  </a>
+
+  <a href="https://t.me/Butlie_BR"
+     target="_blank" rel="noopener noreferrer"
+     aria-label="Telegram（另開分頁）" title="Telegram">
+    <img src="Telegram_2019_Logo.svg.webp" alt="">
+  </a>
+
+  <a href="https://x.com/Butlie_BR"
+     target="_blank" rel="noopener noreferrer"
+     aria-label="X（另開分頁）" title="X">
+    <img src="X_logo.jpg" alt="">
+  </a>
+
+  <a href="https://www.twitch.tv/butlie_br"
+     target="_blank" rel="noopener noreferrer"
+     aria-label="Twitch（另開分頁）" title="Twitch">
+    <img src="images.jpg" alt="">
+  </a>
+
+  <a href="https://www.youtube.com/@Butlie_BR"
+     target="_blank" rel="noopener noreferrer"
+     aria-label="YouTube（另開分頁）" title="YouTube">
+    <img src="YouTube_social_white_circle_(2017).svg" alt="">
+  </a>
+
+  <a href="https://github.com/ButlieBR"
+     target="_blank" rel="noopener noreferrer"
+     aria-label="Github（另開分頁）" title="Github">
+    <img src="GitHub_Invertocat_Logo.svg.webp" alt="">
+  </a>
+
+</nav>
+
+  <main id="site-content">
+    <section class="hero" aria-label="首頁">
+
+      <div class="text-box-title">
+        <p>歡迎來到我的空間</p>
+
+        <h1 class="sayhi">
+          嗨囉嗨囉
+          <br>
+          我是<span class="highlight">巴特勒·棕響</span>
+        </h1>
+
+        <p class="call">
+          可以直接叫我<span class="highlight">巴特</span>或<span class="highlight">棕響</span>就好
+        </p>
+      </div>
+
+      <a
+        class="scroll-hint"
+        href="#page-below"
+        aria-label="往下捲動"
+      >
+        <span class="scroll-hint-text">Scroll Down</span>
+        <span class="scroll-hint-line" aria-hidden="true"></span>
+      </a>
+
+    </section>
+
+<section id="page-below" aria-labelledby="directory-title">
+  <div class="directory">
+    <h2 id="directory-title">歡迎更認識我</h2>
+
+    <!-- 卡片目前供目錄定位及互動展示；目標內容頁尚未設定。
+         每格現有一張圖片；要換圖可新增 class="card-image card-image-hover" 的第二張圖片。 -->
+    <div class="directory-grid">
+
+      <!-- 第一格 -->
+      <button id="menu-about" class="directory-card" type="button">
+        <img class="card-image"
+             src="FurYCH - 頭圖驚喜包 - 巴特勒．棕響.png" alt="" loading="lazy">
+
+        <span class="card-content">
+          <span class="card-number">01</span>
+          <span class="card-title">關於我</span>
+        </span>
+        <span class="card-arrow" aria-hidden="true">↗</span>
+      </button>
+
+      <!-- 第二格 -->
+      <button id="menu-character" class="directory-card" type="button">
+        <img class="card-image"
+             src="棕響(工作、外出).PNG" alt="" loading="lazy">
+
+        <span class="card-content">
+          <span class="card-number">02</span>
+          <span class="card-title">設定圖</span>
+        </span>
+        <span class="card-arrow" aria-hidden="true">↗</span>
+      </button>
+
+      <!-- 第三格 -->
+      <button id="menu-collection" class="directory-card" type="button">
+        <img class="card-image"
+             src="FurYCH - 像素頭像 - 巴特勒．棕響.png" alt="" loading="lazy">
+
+        <span class="card-content">
+          <span class="card-number">03</span>
+          <span class="card-title">委託圖集</span>
+        </span>
+        <span class="card-arrow" aria-hidden="true">↗</span>
+      </button>
+
+      <!-- 第四格 -->
+      <button id="menu-photo" class="directory-card" type="button">
+        <img class="card-image"
+             src="2026特林毛裝Butlie_BR 22_.jpg" alt="" loading="lazy">
+
+        <span class="card-content">
+          <span class="card-number">04</span>
+          <span class="card-title">攝影作品</span>
+        </span>
+        <span class="card-arrow" aria-hidden="true">↗</span>
+      </button>
+
+      <!-- 第五格 -->
+      <button id="menu-art" class="directory-card" type="button">
+        <img class="card-image"
+             src="旅行.png" alt="" loading="lazy">
+
+        <span class="card-content">
+          <span class="card-number">05</span>
+          <span class="card-title">繪圖作品</span>
+        </span>
+        <span class="card-arrow" aria-hidden="true">↗</span>
+      </button>
+
+      <!-- 第六格 -->
+      <button id="menu-upcoming" class="directory-card" type="button">
+        <img class="card-image"
+             src="images.png" alt="" loading="lazy">
+
+        <span class="card-content">
+          <span class="card-number">06</span>
+          <span class="card-title">暫未更新</span>
+        </span>
+        <span class="card-arrow" aria-hidden="true">↗</span>
+      </button>
+
+    </div>
+  </div>
+</section>
+  </main>
 </body>
 </html>
