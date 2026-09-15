@@ -1,0 +1,1067 @@
+/* =========================================================
+   委託圖集 commissions.js
+
+   功能：
+   1. 顯示 Google Drive 圖片
+   2. 依繪師篩選
+   3. 點擊圖片開啟作品詳情
+   4. 上一個 / 下一個作品
+   5. 鍵盤左右鍵切換、Esc 關閉
+   6. 查看 Google Drive 原始檔
+   7. 可選擇接入 Apps Script 自動更新
+
+   此檔案搭配先前的 commissions.html、commissions.css。
+
+   注意：
+   未設定自動更新網址時，使用以下 168 張作品清單。
+   圖片能否顯示，仍取決於 Google Drive 分享權限。
+========================================================= */
+
+// ===== 自動更新設定 =====
+// 若尚未部署 Apps Script，保持空白即可。
+// 完成部署後，填入以 /exec 結尾的網址。
+const DRIVE_SYNC_URL = "https://script.google.com/macros/s/AKfycbxWrTaeUuHhnBb0qe_3O1FVkGXaWsHNtyaX0FH1-aoYE-uKQbiVq6JAHs4frEWnaqiG/exec";
+
+// ===== 繪師個人連結 =====
+// 左邊名稱必須與繪師資料夾名稱完全相同。
+// 右邊填入繪師的完整網址，例如 https://...
+// 留空就只顯示姓名，不產生連結。
+const ARTIST_LINKS = {
+  "05":"https://x.com/Cr72Kamitake",
+  "七柚":"https://x.com/tody_0312",
+  "小白":"https://x.com/Ep745692",
+  "小犽":"https://x.com/A0479156713",
+  "小傻":"https://x.com/xiaoshagai2",
+  "皮皮":"https://x.com/PEAPEAFur",
+  "汪汪懶狗狗":"https://x.com/FurryLanWong",
+  "豆格":"https://x.com/MIX_DOG018",
+  "辛":"https://x.com/CheesestuffP",
+  "典藏":"https://x.com/hauhau_mg",
+  "奈奈":"https://x.com/336_nai",
+  "拉弗":"https://x.com/RathDrawing",
+  "肯肯":"https://x.com/knci17",
+  "阿宇":"https://x.com/potato_12_13",
+  "阿梓":"https://x.com/RS_azu",
+  "阿綽":"https://x.com/meiutrola",
+  "青夜":"https://x.com/Sakusaya2003",
+  "俊雄":"https://x.com/Junxiong_0814",
+  "炭炭":"https://x.com/wolfflame_",
+  "約翰":"https://x.com/JohnTheLewd_Art",
+  "趴機":"https://x.com/paji1229",
+  "香酥":"https://x.com/susuthefox",
+  "帶燈":"https://x.com/Ochiki_Lapis",
+  "野良":"https://x.com/NoranekoC4a4t4",
+  "椪柑爺爺":"https://x.com/Mikanyeye",
+  "無牙":"https://x.com/wuyabottom",
+  "菲爾":"https://x.com/RA_FAIER",
+  "賀斯":"https://www.facebook.com/Horseyisblue",
+  "路卡":"https://x.com/Junyo_luka",
+  "雷邇":"https://x.com/Raier_Cat",
+  "廖糖":"https://x.com/Joeyzliaotang",
+  "獃獃":"https://x.com/HowToDai1005",
+  "璇空":"https://x.com/MEISAKI_EP14",
+  "黎諾":"https://x.com/Reno_0709",
+  "糖粉":"https://x.com/err215670w02",
+  "貓介":"https://x.com/Mao_JJJ",
+  "薩克":"https://x.com/FlywolfStudio2",
+  "壞狗":"https://www.instagram.com/baddog0214",
+  "瀧澤":"https://x.com/Taki_o0",
+  "ㄉㄉ":"https://x.com/rowen_Furry",
+  "CK凱":"https://x.com/CanyneKhai",
+  "J.C.":"https://x.com/jcdump",
+  "K狼":"https://x.com/KwolF_260",
+  "KuN":"https://x.com/KuN_blackcat",
+  "Kutto":"https://x.com/Kuttoyaki",
+  "三漾":"https://x.com/sanyan_1024",
+  "小雨":"https://x.com/Henry3376",
+  "小狼":"https://x.com/CyanusOWO",
+  "小歐":"https://x.com/HongOrion",
+  "小羯":"https://x.com/nekoj222",
+  "天犬":"https://x.com/johnny4478",
+  "天狼星":"https://x.com/cat0989986996",
+  "白糖":"https://x.com/bai_tang_101397",
+  "同學畫的":"",
+  "怪物搖":"https://x.com/SphereBall",
+  "肯尼":"https://x.com/KennyChi6",
+  "阿嵐":"https://x.com/TYArashiArt",
+  "阿綠":"https://x.com/MrGreentea62",
+  "埃亞":"https://x.com/baboc1998",
+  "夏目":"https://x.com/tea_reid",
+  "夏目澤":"https://x.com/KTorazi",
+  "庫尼":"https://x.com/a8295536",
+  "海豚翔":"https://x.com/DolphinShineyee",
+  "狼尾":"https://x.com/Hinata_Sagi",
+  "神川紀也":"https://x.com/AkiyakamikawaX",
+  "瑞特":"https://www.plurk.com/Ryan_622",
+  "嗷嗷":"https://x.com/caturkey123",
+  "澤蜥":"https://x.com/Evia_11300",
+  "可可洛":"",
+  "醬滋":"https://x.com/Jumz0110",
+  "雞腿":"https://x.com/RainMoon0217",
+  "AgitoRyuusaki":"https://x.com/agitongunohoken",
+  "bokuhabokudayot":"https://x.com/bokuhabokudayot",
+  "guruminnSuB":"https://x.com/9uruminn",
+  "Hinagon":"https://x.com/605_hinagon",
+  "merunpan":"https://x.com/merunmohu",
+  "nnnnkkkksk":"https://x.com/nokoskb",
+  "rinrinwolf":"https://x.com/rinrinwolf",
+  "takuuuun69":"https://x.com/takuuuun69",
+  "tontaro_":"https://x.com/tontarotaro",
+  "ulul_82":"https://x.com/U1lys",
+  "Urusai_nu":"https://x.com/Urusai_nu",
+  "wieneko138226":"https://x.com/wieneko138226",
+  "yukiminoideyu":"https://x.com/yukiminoideyu",
+  // 可以繼續新增其他繪師：
+  // ,"繪師名稱": "https://..."
+};
+
+// ===== 繪師名稱 =====
+// 下方每筆作品的第三個數字，是這個陣列的位置。
+// 編號從 0 開始。不要任意調整這裡的排列順序。
+const ARTISTS = [
+  "05",
+  "七柚",
+  "小白",
+  "小犽",
+  "小傻",
+  "皮皮",
+  "汪汪懶狗狗",
+  "豆格",
+  "辛",
+  "典藏",
+  "奈奈",
+  "拉弗",
+  "肯肯",
+  "阿宇",
+  "阿梓",
+  "阿綽",
+  "青夜",
+  "俊雄",
+  "炭炭",
+  "約翰",
+  "趴機",
+  "香酥",
+  "帶燈",
+  "野良",
+  "椪柑爺爺",
+  "無牙",
+  "菲爾",
+  "賀斯",
+  "路卡",
+  "雷邇",
+  "廖糖",
+  "獃獃",
+  "璇空",
+  "黎諾",
+  "糖粉",
+  "貓介",
+  "薩克",
+  "壞狗",
+  "瀧澤",
+  "ㄉㄉ",
+  "CK凱",
+  "J.C.",
+  "K狼",
+  "KuN",
+  "Kutto",
+  "三漾",
+  "小雨",
+  "小狼",
+  "小歐",
+  "小羯",
+  "天犬",
+  "天狼星",
+  "白糖",
+  "同學畫的",
+  "怪物搖",
+  "肯尼",
+  "阿嵐",
+  "阿綠",
+  "埃亞",
+  "夏目",
+  "夏目澤",
+  "庫尼",
+  "海豚翔",
+  "狼尾",
+  "神川紀也",
+  "瑞特",
+  "嗷嗷",
+  "澤蜥",
+  "錯錯",
+  "醬滋",
+  "雞腿",
+  "AgitoRyuusaki",
+  "bokuhabokudayot",
+  "guruminnSuB",
+  "Hinagon",
+  "merunpan",
+  "nnnnkkkksk",
+  "rinrinwolf",
+  "takuuuun69",
+  "tontaro_",
+  "ulul_82",
+  "Urusai_nu",
+  "wieneko138226",
+  "yukiminoideyu",
+  "mount_wood_"
+];
+
+// ===== 作品分類 =====
+// 0 = 約稿
+// 1 = 贈圖
+// 2 = Skeb
+const CATEGORIES = ["約稿", "贈圖", "Skeb"];
+
+// ===== R18 作品設定 =====
+// 填入作品的 Google Drive 檔案 ID。
+// 就是 WORK_ROWS 每行最前面的那串英文數字。
+// 未填入的作品不會遮蔽。
+const R18_IDS = new Set([
+    // "填入第一張作品ID",
+    // "填入第二張作品ID"
+    "1SIqQXAm-fl16_jPAQTyBGZIlUNPROqH6",
+    "1cWaAkAwK-YJxIdgpknlT7IZMaslUt1PN",
+    "1jFfJEEhItb3v8Mn7WXH6AVaYz1H9kYmu",
+    "1D24MVRVZODzIHpKjD9yWdpsO6VJ_DtED",
+    "1wDONol6-wNa7f-PEOajA2IgvjZx_4Xa6",
+    "1Gb1bDsKYL0jFiQaMxxRTeF0IRUBvxbwP",
+    "1S-ITCXBOE02tGwxfdOMMEzbaGApfDXkl",
+    "10IxomMHdjRGpH5aoVaGdlL853WiF8cqI",
+    "1ZgSpDrhM0U69kfE4HSf8dht13o4k_LUp",
+    "1OowKwC7l2T9-lnwn2I8w8YL0vWa6kfdV",
+    "1RL3j3COeqtXNodwKbA6kxtPXmzLYIepi",
+    "1PotAjVl-PlcwE6GgcWEaTGSPVvhbIjh1",
+    "1vSgL1izdtj9LT3vFip34eXrgbur6OzYy",
+]);
+
+// ===== 全部作品資料 =====
+// 每一行格式：
+// ["Google Drive 檔案 ID", "作品名稱", 繪師編號, 分類編號]
+//
+// 可修改第二個欄位，讓網站顯示更好閱讀的作品名稱。
+// 不要更動檔案 ID，否則可能無法讀取圖片。
+const WORK_ROWS = [
+  ["1c3LDqhhzXCCgoM2xUpvKLAZxRxcLk8EE", "夜晚_完稿.png", 0, 0],
+  ["1Bj4rJn09SR0YgBmhQGPxpJp02odj6qCg", "15. 巴特.png", 1, 0],
+  ["1FI-NtPEJCTPysyb8jRkFrXAVTXpQyja9", "2.巴特.png", 1, 0],
+  ["1SIqQXAm-fl16_jPAQTyBGZIlUNPROqH6", "IMG_5087.JPG", 2, 0],
+  ["1yaC4aUZ-wu4xzgZ9630EmMTRLz92Ya8U", "IMG_0144.PNG", 3, 0],
+  ["1QZQ7gA5GxDgvLzd0r9UxQPXObrOTEqZi", "IMG_0145.PNG", 3, 0],
+  ["1lX9R8lCCDEJ02Ad7-t2TytcDOwvoM4pA", "IMG_4162.PNG", 3, 0],
+  ["1cWaAkAwK-YJxIdgpknlT7IZMaslUt1PN", "IMG_4163.PNG", 3, 0],
+  ["1NA5Psbd3NHlJPiuZnecKp8vc0tpZNmV4", "IMG_8522.PNG", 4, 0],
+  ["1HN3BegJlUavRTNi_GvLz6dPe49KWIMFq", "IMG_8523.PNG", 4, 0],
+  ["117pmrNsXI-S-xF0ksyVkj8oWljuCY6GJ", "IMG_8524.PNG", 4, 0],
+  ["1d-bZhTyr9IKc3uTOWrAZbAC_GHvN3foA", "IMG_8525.PNG", 4, 0],
+  ["1ut05_v704u3Bz0Q0wHDPiISv8ZmIpU6f", "IMG_8526.PNG", 4, 0],
+  ["12Ud1JHyHTNscrVTnr6L_6p5yfKGD8fer", "IMG_8527.PNG", 4, 0],
+  ["1ATS5VfpsVBiE4Q-bK-OKEL0PoFq8M7KI", "驚喜包委託-巴特.jpg", 5, 0],
+  ["12WT3gDYRllKprHiEu0Dztquo1ya_yI_J", "FurYCH - 像素頭像 - 巴特勒．棕響.png", 6, 0],
+  ["1-IU94f8HRUJQkRlX6jDRf0hzZBmXinxK", "FurYCH - 頭圖驚喜包 - 巴特勒．棕響.png", 7, 0],
+  ["1I2bELHJq0HiMYQ4oqMJ2MOEejyKbxJAx", "巴特_表情1_微醺(完稿).png", 8, 0],
+  ["1dL8NjBuGbSd72w0DszNOTotP2eSR2z7_", "巴特_表情2_高興而哭(完稿).png", 8, 0],
+  ["1C_MUN-VMYtnZtZLfUD39XxlQl9zvIt5i", "巴特_表情3_拖手微笑(完稿).png", 8, 0],
+  ["1Thz3WDrj6TkLTKP_L9ryAID-eCG_O26o", "2023.08.02", 9, 0],
+  ["1FSOYpsGqhPm2QDtbO0q2HC14atmLQcAg", "到海邊鬆一下_YCH_巴特.jpeg", 9, 0],
+  ["1s13CI5AKv3Tj6QRhR3lAU8U30eIGWMQ1", "屌虐_巴特.png", 9, 0],
+  ["1jFfJEEhItb3v8Mn7WXH6AVaYz1H9kYmu", "IMG_3532.JPG", 10, 0],
+  ["1nIUtrOUp4jFW5A_Pl7IPtyE2LApUD5Cu", "貼圖1.png", 11, 0],
+  ["13PZwT_kSpz_c8PkGRN9BG9HddXi4rzIj", "貼圖2.png", 11, 0],
+  ["1Af0Gw-yJ5v_tSpqYraMzmsHvoezsmiz3", "貼圖3.png", 11, 0],
+  ["1fdV_5qccS5KyQzycV97QPUGHn45ifhM5", "貼圖4.png", 11, 0],
+  ["1ktyTuf5uxqsEYzuofdiGmTRRJFUA0rW-", "貼圖5.png", 11, 0],
+  ["1cBNXLidYIKvLmHUcmzYJHYONC1G0A732", "塗鴉13(27.2).png", 11, 0],
+  ["1fa-s7uByUrNUoOmOxihTIOaf0QTSEP6H", "塗鴉13(28.1).png", 11, 0],
+  ["1s3JWJNGP1bFW1f6vRgT9MFaGNAyZ1epY", "IMG_0853.PNG", 11, 0],
+  ["14Tb7nEmo1CASf7Jvy-yrNeRtA2e_3T-D", "IMG_0855.PNG", 11, 0],
+  ["1tp7wYzpX-JV5X4Z2KIKxioBil8gyC1ej", "巴特委託.png", 12, 0],
+  ["1nyx9n2GR6TxcTs3P4S5tRmwXgEeE0hhI", "委託.png", 12, 0],
+  ["174CseXyMPvgNU6nfD7Rubp05RPa-Ylyp", "export202205252158288520.png", 12, 0],
+  ["1MA7zLR6fPOKLvqcratJ7N1zuO2DQsaq9", "1.png", 13, 0],
+  ["1yHRR7h5y77bRgbcUvXISmtWNBERXsqne", "2.png", 13, 0],
+  ["1RBGmnPblB1_fL3B87U-ZP6Yf8SeS2O8o", "插圖27.gif", 14, 0],
+  ["1TohQIr_xbrBn1K0QXFSk0YdjU5-M4DXg", "巴特.png", 15, 0],
+  ["1SubhuzTBsSLp8JI4gKI5q9RVy4wUdZ7y", "巴特頭圖.png", 15, 0],
+  ["1WtBtYHSm9Cg9iIrCZxDUmmBaDkdceqA3", "Long.png", 15, 0],
+  ["1D24MVRVZODzIHpKjD9yWdpsO6VJ_DtED", "巴特 A.png", 16, 0],
+  ["1wDONol6-wNa7f-PEOajA2IgvjZx_4Xa6", "巴特 B.png", 16, 0],
+  ["1mkWnDOuJmBRqLA7FHp3yDK8NdE1bYrcT", "巴特.png", 16, 0],
+  ["15cVIqIOBE-cyaZdETyx3sFr5uUCWU7oq", "IMG_4094.PNG", 16, 0],
+  ["1fljogBDvG3VUYm_Den0UZ_RaDnkSF4wP", "003.png", 17, 0],
+  ["1iP49oDfQLgCmB_aSeZgkxbuYcbdJe0K9", "半身.jpg", 17, 0],
+  ["1XrI49axlSBo73-Q1JoXk4q-UWwWTKHKV", "插圖3.png", 17, 0],
+  ["1a_VVXrsyWl1kE2YhJm6Ds8bUb4mu0FLA", "IMG_5752.PNG", 18, 0],
+  ["1Gb1bDsKYL0jFiQaMxxRTeF0IRUBvxbwP", "巴特g.gif", 19, 0],
+  ["1DePIYWP9JnlhEurAktMZ8fMwYYcN2adz", "抽菸貼圖.gif", 20, 0],
+  ["1lGnK5uXHdpaGMMzhomYGR-lElO7RbS6b", "抽菸貼圖（實況貼圖用）.gif", 20, 0],
+  ["1v60lb1L_lfim45Q4uYBHKnHgKLbXm6ul", "拍手貼圖_巴特.gif", 20, 0],
+  ["1ImT7UEGWLfeGQvnpQb-XMiMe9TBaP2dD", "揮手貼圖_巴特.gif", 20, 0],
+  ["1j1PX88jKDQHDCP3A_3-VHD5bQFc236kP", "2.png", 21, 0],
+  ["1T3SIb03rsk5IdSu1R4JMBcTg_uG7vI9f", "FurYCH - 【模板】犬科親親YCH - 巴特勒．棕響.png", 22, 0],
+  ["1eU4RyqlJadF0E8pXBbAZppvdo1rJbJPk", "IMG_0167.JPG", 23, 0],
+  ["1-GnNv90wuDOmg5lTSeEG8IHwzlS7sepq", "13.png", 24, 0],
+  ["11A_QpXjy2pAlZd8kwTaPnYgKLpRxgXjC", "巴特.png", 24, 0],
+  ["1E2APbomaMBsj6QxRhR2gIQU7n3P4wOS4", "IMG_7620.PNG", 25, 0],
+  ["1HVveWL_QbjjfTRPZ-UA66-QLvfsXHXhl", "IMG_7621.PNG", 25, 0],
+  ["1ICE9VvEBmUdDK2aN087kc3anlVDhmuWR", "IMG_9664.PNG", 25, 0],
+  ["1RH-7JwxqbXzkLQ5d4BCzvwJOGnYRGHrt", "FurYCH - 睡衣派對 Pajamas YCH - 巴特勒．棕響 (1).png", 26, 0],
+  ["1Kuq-1ALTxU-z31u1wnR60cZhmc2HdBaF", "FurYCH - 睡衣派對 Pajamas YCH - 巴特勒．棕響 (2).png", 26, 0],
+  ["1yNyvwY9g3HXR1DRbTM4LCmRk5vTP5hzY", "FurYCH - 睡衣派對 Pajamas YCH - 巴特勒．棕響 (3).png", 26, 0],
+  ["1DOGujG5vYiLgnXfOz9nqQHazTkxwFaxb", "FurYCH - 睡衣派對 Pajamas YCH - 巴特勒．棕響.png", 26, 0],
+  ["13X71K6S0m-n_wG2sH_DVZsAPgC6muh8B", "IMG_7917.PNG", 26, 0],
+  ["1zGSHvmE0SeSdxuYaSYV0b7k07FsyC9iZ", "IMG_9612.JPG", 27, 0],
+  ["15X2_63DpO3rkh4MpBKvDliFgZlWZ2Vlf", "91.png", 28, 0],
+  ["1YvQdOPRbYgKxnUII_nu5Tnf3KA71rQ_Y", "插圖49.png", 28, 0],
+  ["1x2qNp59xYaiOuiq5ZHKFj0OddKzpmiRo", "2024_10_獸無限模板-31-巴特勒-棕響.jpg", 29, 0],
+  ["1D3o-6GmKb-Z5swGKx6yy8ytKlEyUZRCZ", "IMG_9254.JPG", 30, 0],
+  ["15qf-PI02aqlYigV7g0CKl3mu1mCMs5Rr", "今晚 要嗎(巴特).jpg", 31, 0],
+  ["1r9WNu6bKgYvn2XsyegL7VmwpNvA_p1oI", "今晚 要嗎(巴特)+B.jpg", 31, 0],
+  ["1al1evDTEK1I_0OPx8nZMv_NYQTPOEDr8", "00034.png", 32, 0],
+  ["1S-ITCXBOE02tGwxfdOMMEzbaGApfDXkl", "IMG_8125.PNG", 33, 0],
+  ["1qN4RpefjIstNR95Qq6jXxyreZCEOSX1F", "IMG_8126.PNG", 33, 0],
+  ["1uMUIJ7pKG7mixODenk3Z2gEXpQTogu82", "IMG_8127.PNG", 33, 0],
+  ["1SeEPDPH32DvjXaFQpXdeHBDoGpyKJEmH", "IMG_8128.PNG", 33, 0],
+  ["1GevhSLjN3tgtHOYT4D3HvFHir8eWAMZn", "IMG_8129.PNG", 33, 0],
+  ["1hXjvLxk7rWVvgGjQl2PdKTYF-t3HEPLU", "IMG_0393.JPG", 34, 0],
+  ["1UQz_X3jIgkg54Sg3AB1rYUvkOm7JRbp3", "IMG_0394.JPG", 34, 0],
+  ["1RAhQEz_UzjKv5zVsVMBNcBNqncqYaQg6", "IMG_0395.PNG", 34, 0],
+  ["1Q7ZqrG0-jWNoOa1WdlycjUTI5rxQBgIa", "IMG_0396.PNG", 34, 0],
+  ["12rSJxUYwq7l_WSJ7OEg3qDuRqTZeagd8", "082_巴可可_Twitch.png", 35, 0],
+  ["1mMp8pBL0gTDuswDO0bu1Uf20JU15eMFP", "082_巴可可.png", 35, 0],
+  ["1Pqo0_lGyooxdf2pFN0HgXVq6ruMcIbKX", "FurYCH - 塗鴉頭像驚喜包 - 巴特勒．棕響.png", 36, 0],
+  ["1TZHkkBDO07JzSm3YxkCU3yVrpN_dIGRr", "16(3).png", 37, 0],
+  ["1F4lRBuk7xG59Y1t-YF_NtjUZQEu5jrTp", "IMG_3552.JPG", 38, 0],
+  ["1s3YXaFQkV2aBxj_wzpYdRJVzRfnDZAu7", "沒字ㄉ.png", 39, 0],
+  ["1GnVP0KnReJHeu0T-GGMw2buoDLSfuZhC", "Commission for 巴特(1080p).png", 40, 0],
+  ["1Hyhkn81iJF4T3adcaIhT0bWprDXplagr", "Commission for 巴特(4K).png", 40, 0],
+  ["147FeF29PKPYmKH1IkfcTDrzs3NfBc67l", "Commission for 巴特(S).png", 40, 0],
+  ["1gXKRvwaG0lMnONxtn-xl7IxFzFX3Wylb", "IMG_0958.JPG", 41, 0],
+  ["1XHyS-lVVBsALqVHlCnxv7PeMKQHZzEBI", "IMG_0384.JPG", 42, 0],
+  ["1yMYioszT2Bg48FLSEbRq4eCnktz2zbhk", "巴特.png", 43, 0],
+  ["1jKWoy7KrsesXW0CSaTwSTOlNmUExHQse", "Butlie_BR.png", 44, 0],
+
+  ["1GhUrQy22g7W8A9Pqib--6L23eapmWU3C", "IMG_3021.JPG", 45, 1],
+  ["132Pjk4CQLFZYmy5vXWfypjW47U18OGah", "ButlieBR.jpg", 46, 1],
+  ["1E39R6lVA0R1u8rECZY4pz5b8xJvaMNIN", "ButlieBR.png", 46, 1],
+  ["1lGenyDlTazfN3X5_eOr77jCqh9wnMp2z", "ButlieBR2.png", 46, 1],
+  ["1TF9uNxglRjnaYl299qZawu1j-KUNOeFv", "IMG_6186.JPG", 46, 1],
+  ["1KCEMq86ZdolSbJN8lLMBE0IzzQOiqjLX", "IMG_1749.JPG", 47, 1],
+  ["1uSYY79t1_NXifvj1gcJUesoOMe-BOF5m", "2024.03.11.PNG", 48, 1],
+  ["1JsZuuL-1u0DSJZ5vFqzhazliMo0lbaPY", "IMG_2510.JPG", 48, 1],
+  ["1bGaTBd5o7EVVKMOkJUUmqG2NP6oaLJ4-", "棕響行李箱PNG.png", 49, 1],
+  ["1FgXBr1kpZeHlZO0Lra7653_YkoiQXvTQ", "IMG_0008.JPG", 50, 1],
+  ["1Vf4dpNzpGI8mqCfM3Gthr_78fiiL_vC8", "IMG_0337.JPG", 50, 1],
+  ["1t6j7GfJyL9MdHUT0lpgYuboouSP955Jj", "227.jpg", 51, 1],
+  ["1K_R1M9n9irpPYwFPHApo10_yTNOTdOWF", "ezgif-83b0f6305807f64b.gif", 52, 1],
+  ["1v_aUNPIekSE2FRKMhbOp5SKzadnf8k6l", "ezgif-869f2e2b83d889f0.gif", 52, 1],
+  ["1nwR_lnPvK9SZ-0RPEhsM7EhzmT0qngdF", "ezgif-8f6d9e210f9efb3a.gif", 52, 1],
+  ["1cbJUtqZJIvgDSH4N7zlDY5dpdyMW5_0f", "2023.11.08 張信元.jpg", 53, 1],
+  ["1EeW34GplKYiHONA90fEtMrtv2ZU_snJj", "BTL.jpg", 54, 1],
+  ["1DbN-2ezusL1a2dLwUaEL-akWxoOL159P", "IMG_0026.JPG", 55, 1],
+  ["1A5cXbQlXqXjs7buMLn9vItUVxT28fEqw", "IMG_9394.PNG", 55, 1],
+  ["1J1rwZE-tKCQ2cK7z7C3PLq8VDuU7_Du8", "棕.png", 56, 1],
+  ["1GQxgRi4Ctl7oLbdqCijJuZyvln8q1mji", "IMG_5440.JPG", 56, 1],
+  ["1m9uUNhAWtuqM5hUSG2sxovkaWdSmjLbY", "IMG_8486.JPG", 57, 1],
+  ["1htd-Nr5BFu_dRNawiCczBPi9iEYRsGv3", "290424849_5415665841827277_5212758154766203103_n.jpg", 16, 1],
+  ["14MT1FRyUIDv-ejuVwtcBp4sFEiUNubb3", "photo_2023-03-06_23-31-10.jpg", 58, 1],
+  ["1zY81hzIKXJAHtbApm29JE66sAXaooKG6", "IMG_1350.JPG", 59, 1],
+  ["1xzCrcbFqRP_4CZ96BDittrKWHeVJBnKw", "DBD亞軍圖-巴特勒1.jpg", 60, 1],
+  ["18wIsEPcBarfWfRbnZfarnRfX1r1-x1k5", "DBD亞軍圖-巴特勒2.jpg", 60, 1],
+  ["10IxomMHdjRGpH5aoVaGdlL853WiF8cqI", "IMG_5880.JPG", 61, 1],
+  ["1T_pBPvGOS5exNogpvfWIv93LRE22hGBY", "2023.06.23 海豚翔贈圖", 62, 1],
+  ["1OKOUDRUgqXGrqjrF2Yjm5n9LeZRmg6-z", "2023.09.01 里歐贈圖", 62, 1],
+  ["1sjLQbzEyR2eW4Rqj3vu5c66GMdbfSw_4", "2024.03.15", 62, 1],
+  ["1ME7kikJ88PZXwwRCtnQyKrFJnIArQstZ", "IMG_0299.JPG", 63, 1],
+  ["1nqa4CD9itlorerrA4wUt6KvSUMpLS32T", "P0425-棕響.png", 64, 1],
+  ["1c2jtOErQtBWp9qx88vowOZmVcD1qA7j_", "2023.12.2_DC_.png", 65, 1],
+  ["1DU06HtE7kYEhQFVMceb2H8_vNybtz1G7", "棕響跳跳A.png", 66, 1],
+  ["1WLnBXxbkMFULacTysWbGZwH0t19xtkzJ", "棕響跳跳B.png", 66, 1],
+  ["1Vf6oetH2rGwrycBhmt4FY-uaa8dSited", "巴特勒_棕響.PNG", 67, 1],
+  ["1fdbeNthfdfBvlgM9TfWXmrPDA2KiskUs", "IMG_3510.JPG", 68, 1],
+  ["17c1YXPma2bcPF2Xa3JsQdvK_BSf3WMYv", "photo_2022-03-06_02-22-16.jpg", 69, 1],
+  ["1yZbO5gFjcaweRz35qjlBX2Wm4jOH3Hg5", "IMG_6645.PNG", 70, 1],
+  ["1h8BJ-xV62v6DiWFgNjA13HCmzPf5vF30", "IMG_1033.JPG", 39, 1],
+  ["1nLUWSy3AMBLVo5lG4xAINieVxWONCE4L", "IMG_1746.JPG", 39, 1],
+
+  ["1ARH3pzw0pKt8NeT_ULuJ_JQN_C50rh3Q", "2047917-1.output.png", 71, 2],
+  ["1ywQElm8rxYc5vEnhlnElIwWqAL0jUgTw", "2047917-2.output.png", 71, 2],
+  ["1ZgSpDrhM0U69kfE4HSf8dht13o4k_LUp", "2047917-3.output.png", 71, 2],
+  ["1OowKwC7l2T9-lnwn2I8w8YL0vWa6kfdV", "2047917-4.output.png", 71, 2],
+  ["1mvBot2dASVt_7fH7pHPLcFbeipXeuOxZ", "IMG_8885.PNG", 72, 2],
+  ["1rSvpwfx--Iw0giXRDIuZ_fJeBJx8p7RW", "IMG_8886.PNG", 72, 2],
+  ["14v2pqGCrZJRpY-yAxplEW7gNaIVXmU3z", "3195810-1.output.png", 73, 2],
+  ["1G6N3mO461l4l24f6mFfjWAUiiGCnvcc7", "2024.01.08.png", 74, 2],
+  ["1i-v5QkgMykcPxUEn7YbcoGgNu4ANa-7J", "2024.01.08(去背).png", 74, 2],
+  ["1xuGcIWfcKvuFebkp3dG-HoC0a899QCLk", "2024.01.08(無簽名).png", 74, 2],
+  ["1RL3j3COeqtXNodwKbA6kxtPXmzLYIepi", "2804969-1.output.png", 75, 2],
+  ["1PotAjVl-PlcwE6GgcWEaTGSPVvhbIjh1", "2804969-2.output.png", 75, 2],
+  ["1BCOxEuhKx2rLXgKqd5geO3oo9bSom0pP", "2106520-1.output.png", 76, 2],
+  ["1dHca9ZklRJBUE72Y1ZSpQYFtlyNycv0B", "2106520-2.output.png", 76, 2],
+  ["15AHL0wOxH0bvSuLrcjqawuHQkkCKYmXP", "1790490-1.output.png", 77, 2],
+  ["1vSgL1izdtj9LT3vFip34eXrgbur6OzYy", "1902282-1.output.png", 78, 2],
+  ["1592E_N4P_p9aelor9SWDkPa3wS3v6zzx", "2058156-1.gif", 79, 2],
+  ["1_Ppo2wOrahebMUPuUQ8r7QXtFcf9szbE", "2058156-2.gif", 79, 2],
+  ["19bRTIrpQRKnFmhfg5OqzVIXsfyr66B9W", "2058156-3.gif", 79, 2],
+  ["1fzedb2nbeuBxF3VSLiw7JsIGWUR7V7Z1", "2023.12.15(無簽名版).jpg", 80, 2],
+  ["1rWOIQNdBj7Ffmck2O5Nf0oT5jwCA7esj", "2023.12.15-1.jpg", 80, 2],
+  ["1MmGFu5H4Z0vblNG_IbgQPWtCFTRpva4T", "2179942-1.png", 81, 2],
+  ["178BA4uKkV7FtWIli1V_LO_O5QqsSH25w", "1964253-1.output.png", 82, 2],
+  ["13v1an8MWxBrJgUQnRz_tfu4MRsd5-xEd", "1964253-2.output.png", 82, 2],
+  ["1k7i3EY8X51xNWgRFcuOGtE-9axVlvtpe", "2198470-1.png", 82, 2],
+  ["1lQC2BQEJJga_Q4ysd4L4O7VfA0HoXgf_", "2926215-1.png", 82, 2],
+  ["1W1iTYYnfpwFh2ZlAApp4W_SHPIF5x66a", "2904061-1.png", 83, 2],
+  ["1EydzyyxzvJkV1089wjbhQ6N65y9cdZNT", "2904061-2.png", 83, 2]
+];
+
+// ===== 將簡短資料轉換成完整作品資訊 =====
+let works = WORK_ROWS.map(
+  ([id, title, artistIndex, categoryIndex]) => {
+    const artist = ARTISTS[artistIndex];
+    const category = CATEGORIES[categoryIndex];
+
+    return {
+      id,
+      title,
+      artist,
+      category,
+      description: category + " / " + artist,
+      src:
+        "https://drive.google.com/thumbnail?id=" +
+        encodeURIComponent(id) +
+        "&sz=w1600",
+      original:
+        "https://drive.google.com/file/d/" +
+        id +
+        "/view?usp=drivesdk"
+    };
+  }
+);
+
+// ===== 等待 HTML 準備完成 =====
+if (document.readyState === "loading") {
+  document.addEventListener(
+    "DOMContentLoaded",
+    initGallery,
+    { once: true }
+  );
+} else {
+  initGallery();
+}
+
+function initGallery() {
+  const $ = id => document.getElementById(id);
+
+  const requiredIds = [
+    "gallery",
+    "total",
+    "artist-filter",
+    "viewer",
+    "work-title",
+    "work-artist",
+    "work-description",
+    "stage",
+    "counter",
+    "previous",
+    "next",
+    "close"
+  ];
+
+  const missingIds = requiredIds.filter(id => !$(id));
+
+  if (missingIds.length > 0) {
+    console.error(
+      "委託圖集缺少 HTML 元素：",
+      missingIds.join(", ")
+    );
+    return;
+  }
+
+  const viewer = $("viewer");
+  const artistFilter = $("artist-filter");
+
+  let visible = works.slice();
+  let current = 0;
+  let opener = null;
+  let previousOverflow = "";
+  let syncNotice = "";
+
+  // ===== 顯示作品數量 =====
+  function updateCount() {
+    $("total").textContent =
+      visible.length + " 件作品" + syncNotice;
+  }
+
+  // ===== 建立圖片 =====
+  function imageFor(work, lazy = false) {
+    const img = new Image();
+
+    img.alt = work.title;
+    img.decoding = "async";
+
+    if (lazy) {
+      img.loading = "lazy";
+    }
+
+    img.src = work.src;
+
+    return img;
+  }
+
+  // ===== 建立繪師篩選選單 =====
+  function populateArtists() {
+    const selectedArtist = artistFilter.value;
+
+    artistFilter.replaceChildren(
+      new Option("全部繪師", "")
+    );
+
+    const artistNames = [
+      ...new Set(works.map(work => work.artist))
+    ];
+
+    artistNames.sort((a, b) => {
+      return a.localeCompare(b, "zh-Hant");
+    });
+
+    artistNames.forEach(artist => {
+      artistFilter.append(
+        new Option(artist, artist)
+      );
+    });
+
+    // 更新作品清單後，盡可能保留原本選擇。
+    if (artistNames.includes(selectedArtist)) {
+      artistFilter.value = selectedArtist;
+    }
+  }
+
+  // ===== 取得篩選後的作品 =====
+  function applyFilter() {
+    const selectedArtist = artistFilter.value;
+
+    visible = works.filter(work => {
+      return (
+        !selectedArtist ||
+        work.artist === selectedArtist
+      );
+    });
+
+    renderGrid();
+    route();
+  }
+
+// ===== 以資料夾方式展示，不顯示縮圖與檔名 =====
+function renderGrid() {
+  $("gallery").replaceChildren();
+  updateCount();
+
+  const folders = new Map();
+
+  visible.forEach(work => {
+    // 同名繪師在不同分類下，仍保留為不同資料夾。
+    const category = work.category || "未分類";
+    const key = category + "/" + work.artist;
+
+    if (!folders.has(key)) {
+      folders.set(key, {
+        category,
+        artist: work.artist,
+        works: []
+      });
+    }
+
+    folders.get(key).works.push(work);
+  });
+
+  folders.forEach(folder => {
+    const button = document.createElement("button");
+
+    button.type = "button";
+    button.className = "folder-card";
+    button.setAttribute(
+      "aria-label",
+      `開啟 ${folder.category} 的 ${folder.artist} 資料夾`
+    );
+
+    const icon = document.createElement("span");
+    icon.className = "folder-icon";
+    icon.textContent = "📁";
+    icon.setAttribute("aria-hidden", "true");
+
+    const category = document.createElement("span");
+    category.className = "folder-category";
+    category.textContent = folder.category;
+
+    const name = document.createElement("strong");
+    name.className = "folder-name";
+    name.textContent = folder.artist;
+
+    const count = document.createElement("span");
+    count.className = "folder-count";
+    count.textContent = folder.works.length + " 件作品";
+
+    button.append(icon, category, name, count);
+
+    button.addEventListener("click", () => {
+      opener = button;
+
+      // 詳情的上一張／下一張只切換這個資料夾的作品。
+      visible = folder.works.slice();
+
+      location.hash =
+        "work=" + encodeURIComponent(visible[0].id);
+
+      route();
+    });
+
+    $("gallery").append(button);
+  });
+}
+// ===== 作品詳情：隱藏檔名，指定 R18 先遮蔽 =====
+function renderDetail() {
+  const work = visible[current];
+  if (!work) return;
+
+  const isR18 = R18_IDS.has(work.id);
+
+  // 不顯示原始檔名。
+  $("work-title").textContent =
+    "作品 " + String(current + 1).padStart(2, "0");
+
+// ===== 顯示繪師署名與連結 =====
+const credit = $("work-artist");
+
+credit.replaceChildren(
+  document.createTextNode("繪師 / ")
+);
+
+const artistUrl = (ARTIST_LINKS[work.artist] || "").trim();
+
+let validUrl = null;
+
+try {
+  const parsed = new URL(artistUrl);
+
+  if (
+    parsed.protocol === "https:" ||
+    parsed.protocol === "http:"
+  ) {
+    validUrl = parsed.href;
+  }
+} catch {
+  // 未填網址或格式不正確時，保留普通文字。
+}
+
+if (validUrl) {
+  const link = document.createElement("a");
+
+  link.className = "artist-link";
+  link.href = validUrl;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  link.textContent = work.artist + " ↗";
+
+  link.setAttribute(
+    "aria-label",
+    "前往繪師 " + work.artist + " 的網站（另開分頁）"
+  );
+
+  credit.append(link);
+} else {
+  credit.append(
+    document.createTextNode(work.artist)
+  );
+}
+
+  $("work-description").textContent =
+    work.category || "";
+
+  const stage = $("stage");
+  stage.replaceChildren();
+
+  function showImage() {
+    stage.replaceChildren();
+
+    const img = imageFor(work);
+
+    // 替代文字也不使用檔案名稱。
+    img.alt = work.artist + "的作品";
+
+    img.addEventListener("error", () => {
+      if (img.parentNode !== stage) return;
+
+      const message = document.createElement("p");
+      message.className = "fallback";
+      message.textContent = "圖片暫時無法載入，請稍後再試。";
+      stage.replaceChildren(message);
+    });
+
+    stage.append(img);
+  }
+
+  if (isR18) {
+    const cover = document.createElement("div");
+    cover.className = "r18-cover";
+
+    const label = document.createElement("strong");
+    label.textContent = "R18";
+
+    const message = document.createElement("p");
+    message.textContent = "此作品含成人內容";
+
+    const reveal = document.createElement("button");
+    reveal.type = "button";
+    reveal.textContent = "我已滿 18 歲，顯示作品";
+
+    reveal.addEventListener("click", showImage, {
+      once: true
+    });
+
+    cover.append(label, message, reveal);
+    stage.append(cover);
+  } else {
+    showImage();
+  }
+
+  $("counter").textContent =
+    (current + 1) + " / " + visible.length;
+
+  $("previous").disabled = current === 0;
+  $("next").disabled =
+    current === visible.length - 1;
+}
+
+  // ===== 從網址讀取指定作品 =====
+  function route() {
+    const match = location.hash.match(/^#work=(.*)$/);
+    let id = "";
+
+    try {
+      id = match
+        ? decodeURIComponent(match[1])
+        : "";
+    } catch {
+      id = "";
+    }
+
+    const index = visible.findIndex(work => {
+      return work.id === id;
+    });
+
+    if (index < 0) {
+      if (viewer.open) {
+        viewer.close();
+      }
+      return;
+    }
+
+    current = index;
+    renderDetail();
+
+    if (!viewer.open) {
+      previousOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      viewer.showModal();
+    }
+  }
+
+  // ===== 上一個 / 下一個作品 =====
+  function move(delta) {
+    const nextIndex = current + delta;
+
+    if (
+      nextIndex < 0 ||
+      nextIndex >= visible.length
+    ) {
+      return;
+    }
+
+    const hash =
+      "#work=" +
+      encodeURIComponent(visible[nextIndex].id);
+
+    // 使用完整網址，兼容本機 file:// 頁面。
+    const url = new URL(location.href);
+    url.hash = hash;
+
+    history.replaceState(null, "", url.href);
+    route();
+  }
+
+  $("previous").addEventListener("click", () => {
+    move(-1);
+  });
+
+  $("next").addEventListener("click", () => {
+    move(1);
+  });
+
+// ===== 返回圖集 =====
+function closeViewer() {
+  const url = new URL(location.href);
+
+  // 清除網址中的作品 ID。
+  url.hash = "";
+
+  history.replaceState(null, "", url.href);
+
+  if (viewer.open) {
+    viewer.close();
+  }
+}
+
+// 點擊「返回圖集」。
+$("close").addEventListener("click", closeViewer);
+
+// 按 Esc 關閉。
+viewer.addEventListener("cancel", event => {
+  event.preventDefault();
+  closeViewer();
+});
+
+// 關閉後恢復捲動與作品範圍。
+// 這個 close 事件只保留一份。
+viewer.addEventListener("close", () => {
+  document.body.style.overflow = previousOverflow;
+
+  const selectedArtist = artistFilter.value;
+
+  // 恢復目前篩選下的全部作品，
+  // 避免停留在剛才開啟的單一資料夾。
+  visible = works.filter(work => {
+    return (
+      !selectedArtist ||
+      work.artist === selectedArtist
+    );
+  });
+
+  updateCount();
+
+  // 將鍵盤焦點移回原本點擊的資料夾。
+  if (opener?.isConnected) {
+    opener.focus();
+  }
+});
+
+  // ===== 鍵盤左右鍵切換 =====
+  viewer.addEventListener("keydown", event => {
+    if (
+      event.altKey ||
+      event.ctrlKey ||
+      event.metaKey
+    ) {
+      return;
+    }
+
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      move(1);
+    }
+
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      move(-1);
+    }
+  });
+
+  // ===== 繪師篩選 =====
+  artistFilter.addEventListener(
+    "change",
+    applyFilter
+  );
+
+  // 支援瀏覽器上一頁及作品網址。
+  window.addEventListener("hashchange", route);
+
+  // ===== 初次顯示 =====
+  populateArtists();
+  applyFilter();
+
+    // ===== Google Apps Script 自動更新 =====
+  if (!DRIVE_SYNC_URL.trim()) {
+    return;
+  }
+
+  const syncUrl = DRIVE_SYNC_URL.trim();
+
+  if (
+    !/^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec$/.test(
+      syncUrl
+    )
+  ) {
+    syncNotice = "（更新網址不正確，必須使用 /exec 網址）";
+    updateCount();
+    return;
+  }
+
+  syncNotice = "（正在更新雲端清單…）";
+  updateCount();
+
+  // 保留舊資料，必要時補回同一作品的分類。
+  const previousWorks = new Map(
+    works.map(work => [work.id, work])
+  );
+
+  const script = document.createElement("script");
+  let settled = false;
+  let receivedCallback = false;
+
+  const timer = setTimeout(() => {
+    failSync("等待超過 45 秒，未收到有效回應");
+  }, 45000);
+
+  function failSync(reason) {
+    if (settled) return;
+
+    settled = true;
+    clearTimeout(timer);
+    script.remove();
+
+    syncNotice =
+      "（更新失敗：" + reason + "；顯示已匯入清單）";
+
+    updateCount();
+
+    console.error("Google Drive 更新失敗：", reason);
+  }
+
+  // 從明確的分類欄位或路徑取得分類。
+  function resolveCategory(work, previous) {
+    const category =
+      typeof work.category === "string"
+        ? work.category.trim()
+        : "";
+
+    if (category && category !== "未分類") {
+      return category;
+    }
+
+    const parts = String(work.description || "")
+      .split("/")
+      .map(part => part.trim())
+      .filter(Boolean);
+
+    const fromPath = parts.find(part =>
+      ["約稿", "贈圖", "Skeb"].includes(part)
+    );
+
+    if (fromPath) {
+      return fromPath;
+    }
+
+    // 只沿用相同檔案 ID 的分類，不依繪師名稱猜測。
+    return previous?.category || "未分類";
+  }
+
+  // 必須與 Apps Script 回傳的回呼名稱一致。
+  window.receiveDriveGallery = payload => {
+    if (settled) return;
+
+    receivedCallback = true;
+
+    if (!payload || typeof payload !== "object") {
+      failSync("雲端回傳內容不是有效資料");
+      return;
+    }
+
+    if (payload.error) {
+      failSync("雲端程式回報：" + String(payload.error));
+      return;
+    }
+
+    if (!Array.isArray(payload.works)) {
+      failSync("雲端回傳資料缺少 works 陣列");
+      return;
+    }
+
+    const updatedWorks = new Map();
+
+    for (let index = 0; index < payload.works.length; index++) {
+      const work = payload.works[index];
+
+      if (
+        !work ||
+        typeof work.id !== "string" ||
+        !/^[A-Za-z0-9_-]+$/.test(work.id) ||
+        typeof work.artist !== "string" ||
+        !work.artist.trim()
+      ) {
+        failSync(
+          "第 " + (index + 1) + " 筆資料缺少有效 ID 或繪師"
+        );
+        return;
+      }
+
+      const previous = previousWorks.get(work.id);
+      const artist = work.artist.trim();
+      const category = resolveCategory(work, previous);
+
+      // 網頁不再顯示原始檔按鈕，
+      // 因此不要求雲端提供 original 欄位。
+      // 圖片網址由 Drive 檔案 ID 統一建立。
+      updatedWorks.set(work.id, {
+        id: work.id,
+
+        title:
+          typeof work.title === "string"
+            ? work.title
+            : previous?.title || "作品",
+
+        artist,
+        category,
+
+        description:
+          typeof work.description === "string" &&
+          work.description.trim()
+            ? work.description
+            : category + " / " + artist,
+
+        src:
+          "https://drive.google.com/thumbnail?id=" +
+          encodeURIComponent(work.id) +
+          "&sz=w1600"
+      });
+    }
+
+    settled = true;
+    clearTimeout(timer);
+    script.remove();
+
+    // 避免更新時仍停留在舊的作品瀏覽範圍。
+    if (viewer.open) {
+      closeViewer();
+    }
+
+    works = [...updatedWorks.values()];
+
+    const unclassifiedCount = works.filter(work => {
+      return work.category === "未分類";
+    }).length;
+
+    syncNotice = unclassifiedCount
+      ? "（已更新；" +
+        unclassifiedCount +
+        " 件作品缺少雲端分類）"
+      : "（已從雲端更新）";
+
+    populateArtists();
+    applyFilter();
+    updateCount();
+  };
+
+  // 網址載入失敗：例如權限、部署或網路問題。
+  script.addEventListener("error", () => {
+    failSync("無法載入部署網址，請檢查存取權限或網路");
+  });
+
+  // 已載入，但沒有執行指定回呼：
+  // 常見於回傳純 JSON 或回呼名稱不同。
+  script.addEventListener("load", () => {
+    if (!settled && !receivedCallback) {
+      failSync("回傳內容沒有呼叫 receiveDriveGallery");
+    }
+  });
+
+  script.src = syncUrl;
+  document.head.append(script);
+}

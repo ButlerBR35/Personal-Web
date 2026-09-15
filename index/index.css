@@ -1002,3 +1002,8 @@ html:lang(en) .sayhi {
     line-break: strict;
   }
 }
+
+a.directory-card {
+  color: inherit;
+  text-decoration: none;
+}

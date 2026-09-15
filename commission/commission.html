@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>委託圖集 · 巴特</title>
+<link rel="stylesheet" href="commission.css">
+</head>
+<body>
+<!-- 與首頁共用影片：將本檔案放在 index.html 同一層。 -->
+<video class="background" autoplay muted loop playsinline aria-hidden="true">
+    <source src="巴特委託公開版.mp4" type="video/mp4">
+</video>
+<div class="shade" aria-hidden="true"></div>
+<header>
+    <a href="../index/index.html">← 返回首頁</a>
+</header>
+<main>
+    <p class="eyebrow">COMMISSIONS</p>
+    <h1>委託圖集</h1>
+    <div class="toolbar">
+        <p id="total" role="status"></p>
+        <select id="artist-filter" aria-label="依繪師篩選">
+            <option value="">全部繪師</option>
+        </select>
+    </div>
+    <div class="grid" id="gallery"></div>
+    <noscript>請啟用 JavaScript，以瀏覽作品與切換圖片。</noscript>
+</main>
+<dialog id="viewer" aria-labelledby="work-title">
+    <div class="detail">
+        <div class="information">
+            <p class="eyebrow">COMMISSION / ARTWORK</p>
+            <h2 id="work-title"></h2>
+            <p class="credit" id="work-artist"></p>
+            <p class="description" id="work-description"></p>
+        </div>
+        <div class="image-stage" id="stage"></div>
+    </div>
+    <div class="detail-controls">
+        <button id="previous" type="button">← 上一個作品</button>
+        <button id="next" class="next" type="button">下一個作品 →</button>
+        <span id="counter" class="counter" aria-live="polite"></span>
+        <button class="close" id="close" type="button">返回圖集 ✕</button>
+    </div>
+</dialog>
+<script src="commission.js" defer></script>
+<script src="commission-language.js" defer></script>
+</body>
+</html>
