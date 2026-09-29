@@ -72,7 +72,6 @@ const ARTIST_LINKS = {
   "K狼":"https://x.com/KwolF_260",
   "KuN":"https://x.com/KuN_blackcat",
   "Kutto":"https://x.com/Kuttoyaki",
-  "Mint":"https://x.com/Mintza_BO",
   "三漾":"https://x.com/sanyan_1024",
   "小雨":"https://x.com/Henry3376",
   "小狼":"https://x.com/CyanusOWO",
@@ -165,7 +164,6 @@ const ARTISTS = [
   "K狼",
   "KuN",
   "Kutto",
-  "Mint",
   "三漾",
   "小雨",
   "小狼",
@@ -204,18 +202,15 @@ const ARTISTS = [
   "ulul_82",
   "Urusai_nu",
   "wieneko138226",
-  "yukiminoideyu"
+  "yukiminoideyu",
+  "mount_wood_"
 ];
 
 // ===== 作品分類 =====
 // 0 = 約稿
 // 1 = 贈圖
 // 2 = Skeb
-const CATEGORIES = [
-  "約稿",
-  "贈圖",
-  "Skeb"
-];
+const CATEGORIES = ["約稿", "贈圖", "Skeb"];
 
 // ===== R18 作品設定 =====
 // 填入作品的 Google Drive 檔案 ID。
@@ -237,8 +232,8 @@ const R18_IDS = new Set([
     "1RL3j3COeqtXNodwKbA6kxtPXmzLYIepi",
     "1PotAjVl-PlcwE6GgcWEaTGSPVvhbIjh1",
     "1vSgL1izdtj9LT3vFip34eXrgbur6OzYy",
-    "18f222Lw-O1UUGfZyni2XadOcaCl0c171",
-    "1WjF1PKKTi67smH4QTvHTwLB1AU51H9aa",
+    "1Ng7uPZhE7I6Oad-pSDhfg0sGP2qgAjf3",
+    "1Ng7uPZhE7I6Oad-pSDhfg0sGP2qgAjf3",
 ]);
 
 // ===== 全部作品資料 =====
@@ -248,1032 +243,176 @@ const R18_IDS = new Set([
 // 可修改第二個欄位，讓網站顯示更好閱讀的作品名稱。
 // 不要更動檔案 ID，否則可能無法讀取圖片。
 const WORK_ROWS = [
-  [
-    "1c3LDqhhzXCCgoM2xUpvKLAZxRxcLk8EE",
-    "夜晚_完稿.png",
-    0,
-    0
-  ],
-  [
-    "1Bj4rJn09SR0YgBmhQGPxpJp02odj6qCg",
-    "15. 巴特.png",
-    1,
-    0
-  ],
-  [
-    "1FI-NtPEJCTPysyb8jRkFrXAVTXpQyja9",
-    "2.巴特.png",
-    1,
-    0
-  ],
-  [
-    "1SIqQXAm-fl16_jPAQTyBGZIlUNPROqH6",
-    "IMG_5087.JPG",
-    2,
-    0
-  ],
-  [
-    "1yaC4aUZ-wu4xzgZ9630EmMTRLz92Ya8U",
-    "IMG_0144.PNG",
-    3,
-    0
-  ],
-  [
-    "1QZQ7gA5GxDgvLzd0r9UxQPXObrOTEqZi",
-    "IMG_0145.PNG",
-    3,
-    0
-  ],
-  [
-    "1lX9R8lCCDEJ02Ad7-t2TytcDOwvoM4pA",
-    "IMG_4162.PNG",
-    3,
-    0
-  ],
-  [
-    "1cWaAkAwK-YJxIdgpknlT7IZMaslUt1PN",
-    "IMG_4163.PNG",
-    3,
-    0
-  ],
-  [
-    "1NA5Psbd3NHlJPiuZnecKp8vc0tpZNmV4",
-    "IMG_8522.PNG",
-    4,
-    0
-  ],
-  [
-    "1HN3BegJlUavRTNi_GvLz6dPe49KWIMFq",
-    "IMG_8523.PNG",
-    4,
-    0
-  ],
-  [
-    "117pmrNsXI-S-xF0ksyVkj8oWljuCY6GJ",
-    "IMG_8524.PNG",
-    4,
-    0
-  ],
-  [
-    "1d-bZhTyr9IKc3uTOWrAZbAC_GHvN3foA",
-    "IMG_8525.PNG",
-    4,
-    0
-  ],
-  [
-    "1ut05_v704u3Bz0Q0wHDPiISv8ZmIpU6f",
-    "IMG_8526.PNG",
-    4,
-    0
-  ],
-  [
-    "12Ud1JHyHTNscrVTnr6L_6p5yfKGD8fer",
-    "IMG_8527.PNG",
-    4,
-    0
-  ],
-  [
-    "1ATS5VfpsVBiE4Q-bK-OKEL0PoFq8M7KI",
-    "驚喜包委託-巴特.jpg",
-    5,
-    0
-  ],
-  [
-    "12WT3gDYRllKprHiEu0Dztquo1ya_yI_J",
-    "FurYCH - 像素頭像 - 巴特勒．棕響.png",
-    6,
-    0
-  ],
-  [
-    "1-IU94f8HRUJQkRlX6jDRf0hzZBmXinxK",
-    "FurYCH - 頭圖驚喜包 - 巴特勒．棕響.png",
-    7,
-    0
-  ],
-  [
-    "1I2bELHJq0HiMYQ4oqMJ2MOEejyKbxJAx",
-    "巴特_表情1_微醺(完稿).png",
-    8,
-    0
-  ],
-  [
-    "1dL8NjBuGbSd72w0DszNOTotP2eSR2z7_",
-    "巴特_表情2_高興而哭(完稿).png",
-    8,
-    0
-  ],
-  [
-    "1C_MUN-VMYtnZtZLfUD39XxlQl9zvIt5i",
-    "巴特_表情3_拖手微笑(完稿).png",
-    8,
-    0
-  ],
-  [
-    "1Thz3WDrj6TkLTKP_L9ryAID-eCG_O26o",
-    "2023.08.02",
-    9,
-    0
-  ],
-  [
-    "1FSOYpsGqhPm2QDtbO0q2HC14atmLQcAg",
-    "到海邊鬆一下_YCH_巴特.jpeg",
-    9,
-    0
-  ],
-  [
-    "1s13CI5AKv3Tj6QRhR3lAU8U30eIGWMQ1",
-    "屌虐_巴特.png",
-    9,
-    0
-  ],
-  [
-    "1jFfJEEhItb3v8Mn7WXH6AVaYz1H9kYmu",
-    "IMG_3532.JPG",
-    10,
-    0
-  ],
-  [
-    "1nIUtrOUp4jFW5A_Pl7IPtyE2LApUD5Cu",
-    "貼圖1.png",
-    11,
-    0
-  ],
-  [
-    "13PZwT_kSpz_c8PkGRN9BG9HddXi4rzIj",
-    "貼圖2.png",
-    11,
-    0
-  ],
-  [
-    "1Af0Gw-yJ5v_tSpqYraMzmsHvoezsmiz3",
-    "貼圖3.png",
-    11,
-    0
-  ],
-  [
-    "1fdV_5qccS5KyQzycV97QPUGHn45ifhM5",
-    "貼圖4.png",
-    11,
-    0
-  ],
-  [
-    "1ktyTuf5uxqsEYzuofdiGmTRRJFUA0rW-",
-    "貼圖5.png",
-    11,
-    0
-  ],
-  [
-    "1cBNXLidYIKvLmHUcmzYJHYONC1G0A732",
-    "塗鴉13(27.2).png",
-    11,
-    0
-  ],
-  [
-    "1fa-s7uByUrNUoOmOxihTIOaf0QTSEP6H",
-    "塗鴉13(28.1).png",
-    11,
-    0
-  ],
-  [
-    "1s3JWJNGP1bFW1f6vRgT9MFaGNAyZ1epY",
-    "IMG_0853.PNG",
-    11,
-    0
-  ],
-  [
-    "14Tb7nEmo1CASf7Jvy-yrNeRtA2e_3T-D",
-    "IMG_0855.PNG",
-    11,
-    0
-  ],
-  [
-    "1tp7wYzpX-JV5X4Z2KIKxioBil8gyC1ej",
-    "巴特委託.png",
-    12,
-    0
-  ],
-  [
-    "1nyx9n2GR6TxcTs3P4S5tRmwXgEeE0hhI",
-    "委託.png",
-    12,
-    0
-  ],
-  [
-    "174CseXyMPvgNU6nfD7Rubp05RPa-Ylyp",
-    "export202205252158288520.png",
-    12,
-    0
-  ],
-  [
-    "1MA7zLR6fPOKLvqcratJ7N1zuO2DQsaq9",
-    "1.png",
-    13,
-    0
-  ],
-  [
-    "1yHRR7h5y77bRgbcUvXISmtWNBERXsqne",
-    "2.png",
-    13,
-    0
-  ],
-  [
-    "1RBGmnPblB1_fL3B87U-ZP6Yf8SeS2O8o",
-    "插圖27.gif",
-    14,
-    0
-  ],
-  [
-    "1TohQIr_xbrBn1K0QXFSk0YdjU5-M4DXg",
-    "巴特.png",
-    15,
-    0
-  ],
-  [
-    "1D_CuvaFkLiN1kgcVSRZ20RSxFMr2kufR",
-    "巴特2.png",
-    15,
-    0
-  ],
-  [
-    "1SubhuzTBsSLp8JI4gKI5q9RVy4wUdZ7y",
-    "巴特頭圖.png",
-    15,
-    0
-  ],
-  [
-    "1WtBtYHSm9Cg9iIrCZxDUmmBaDkdceqA3",
-    "Long.png",
-    15,
-    0
-  ],
-  [
-    "1D24MVRVZODzIHpKjD9yWdpsO6VJ_DtED",
-    "巴特 A.png",
-    16,
-    0
-  ],
-  [
-    "1wDONol6-wNa7f-PEOajA2IgvjZx_4Xa6",
-    "巴特 B.png",
-    16,
-    0
-  ],
-  [
-    "1mkWnDOuJmBRqLA7FHp3yDK8NdE1bYrcT",
-    "巴特.png",
-    16,
-    0
-  ],
-  [
-    "15cVIqIOBE-cyaZdETyx3sFr5uUCWU7oq",
-    "IMG_4094.PNG",
-    16,
-    0
-  ],
-  [
-    "1fljogBDvG3VUYm_Den0UZ_RaDnkSF4wP",
-    "003.png",
-    17,
-    0
-  ],
-  [
-    "1iP49oDfQLgCmB_aSeZgkxbuYcbdJe0K9",
-    "半身.jpg",
-    17,
-    0
-  ],
-  [
-    "1XrI49axlSBo73-Q1JoXk4q-UWwWTKHKV",
-    "插圖3.png",
-    17,
-    0
-  ],
-  [
-    "1a_VVXrsyWl1kE2YhJm6Ds8bUb4mu0FLA",
-    "IMG_5752.PNG",
-    18,
-    0
-  ],
-  [
-    "1Gb1bDsKYL0jFiQaMxxRTeF0IRUBvxbwP",
-    "巴特g.gif",
-    19,
-    0
-  ],
-  [
-    "1DePIYWP9JnlhEurAktMZ8fMwYYcN2adz",
-    "抽菸貼圖.gif",
-    20,
-    0
-  ],
-  [
-    "1lGnK5uXHdpaGMMzhomYGR-lElO7RbS6b",
-    "抽菸貼圖（實況貼圖用）.gif",
-    20,
-    0
-  ],
-  [
-    "1v60lb1L_lfim45Q4uYBHKnHgKLbXm6ul",
-    "拍手貼圖_巴特.gif",
-    20,
-    0
-  ],
-  [
-    "1ImT7UEGWLfeGQvnpQb-XMiMe9TBaP2dD",
-    "揮手貼圖_巴特.gif",
-    20,
-    0
-  ],
-  [
-    "1j1PX88jKDQHDCP3A_3-VHD5bQFc236kP",
-    "2.png",
-    21,
-    0
-  ],
-  [
-    "1T3SIb03rsk5IdSu1R4JMBcTg_uG7vI9f",
-    "FurYCH - 【模板】犬科親親YCH - 巴特勒．棕響.png",
-    22,
-    0
-  ],
-  [
-    "1eU4RyqlJadF0E8pXBbAZppvdo1rJbJPk",
-    "IMG_0167.JPG",
-    23,
-    0
-  ],
-  [
-    "1-GnNv90wuDOmg5lTSeEG8IHwzlS7sepq",
-    "13.png",
-    24,
-    0
-  ],
-  [
-    "11A_QpXjy2pAlZd8kwTaPnYgKLpRxgXjC",
-    "巴特.png",
-    24,
-    0
-  ],
-  [
-    "1E2APbomaMBsj6QxRhR2gIQU7n3P4wOS4",
-    "IMG_7620.PNG",
-    25,
-    0
-  ],
-  [
-    "1HVveWL_QbjjfTRPZ-UA66-QLvfsXHXhl",
-    "IMG_7621.PNG",
-    25,
-    0
-  ],
-  [
-    "1ICE9VvEBmUdDK2aN087kc3anlVDhmuWR",
-    "IMG_9664.PNG",
-    25,
-    0
-  ],
-  [
-    "1RH-7JwxqbXzkLQ5d4BCzvwJOGnYRGHrt",
-    "FurYCH - 睡衣派對 Pajamas YCH - 巴特勒．棕響 (1).png",
-    26,
-    0
-  ],
-  [
-    "1Kuq-1ALTxU-z31u1wnR60cZhmc2HdBaF",
-    "FurYCH - 睡衣派對 Pajamas YCH - 巴特勒．棕響 (2).png",
-    26,
-    0
-  ],
-  [
-    "1yNyvwY9g3HXR1DRbTM4LCmRk5vTP5hzY",
-    "FurYCH - 睡衣派對 Pajamas YCH - 巴特勒．棕響 (3).png",
-    26,
-    0
-  ],
-  [
-    "1DOGujG5vYiLgnXfOz9nqQHazTkxwFaxb",
-    "FurYCH - 睡衣派對 Pajamas YCH - 巴特勒．棕響.png",
-    26,
-    0
-  ],
-  [
-    "13X71K6S0m-n_wG2sH_DVZsAPgC6muh8B",
-    "IMG_7917.PNG",
-    26,
-    0
-  ],
-  [
-    "1zGSHvmE0SeSdxuYaSYV0b7k07FsyC9iZ",
-    "IMG_9612.JPG",
-    27,
-    0
-  ],
-  [
-    "15X2_63DpO3rkh4MpBKvDliFgZlWZ2Vlf",
-    "91.png",
-    28,
-    0
-  ],
-  [
-    "1YvQdOPRbYgKxnUII_nu5Tnf3KA71rQ_Y",
-    "插圖49.png",
-    28,
-    0
-  ],
-  [
-    "1x2qNp59xYaiOuiq5ZHKFj0OddKzpmiRo",
-    "2024_10_獸無限模板-31-巴特勒-棕響.jpg",
-    29,
-    0
-  ],
-  [
-    "1D3o-6GmKb-Z5swGKx6yy8ytKlEyUZRCZ",
-    "IMG_9254.JPG",
-    30,
-    0
-  ],
-  [
-    "15qf-PI02aqlYigV7g0CKl3mu1mCMs5Rr",
-    "今晚 要嗎(巴特).jpg",
-    31,
-    0
-  ],
-  [
-    "1r9WNu6bKgYvn2XsyegL7VmwpNvA_p1oI",
-    "今晚 要嗎(巴特)+B.jpg",
-    31,
-    0
-  ],
-  [
-    "1al1evDTEK1I_0OPx8nZMv_NYQTPOEDr8",
-    "00034.png",
-    32,
-    0
-  ],
-  [
-    "1S-ITCXBOE02tGwxfdOMMEzbaGApfDXkl",
-    "IMG_8125.PNG",
-    33,
-    0
-  ],
-  [
-    "1qN4RpefjIstNR95Qq6jXxyreZCEOSX1F",
-    "IMG_8126.PNG",
-    33,
-    0
-  ],
-  [
-    "1uMUIJ7pKG7mixODenk3Z2gEXpQTogu82",
-    "IMG_8127.PNG",
-    33,
-    0
-  ],
-  [
-    "1SeEPDPH32DvjXaFQpXdeHBDoGpyKJEmH",
-    "IMG_8128.PNG",
-    33,
-    0
-  ],
-  [
-    "1GevhSLjN3tgtHOYT4D3HvFHir8eWAMZn",
-    "IMG_8129.PNG",
-    33,
-    0
-  ],
-  [
-    "1hXjvLxk7rWVvgGjQl2PdKTYF-t3HEPLU",
-    "IMG_0393.JPG",
-    34,
-    0
-  ],
-  [
-    "1UQz_X3jIgkg54Sg3AB1rYUvkOm7JRbp3",
-    "IMG_0394.JPG",
-    34,
-    0
-  ],
-  [
-    "1RAhQEz_UzjKv5zVsVMBNcBNqncqYaQg6",
-    "IMG_0395.PNG",
-    34,
-    0
-  ],
-  [
-    "1Q7ZqrG0-jWNoOa1WdlycjUTI5rxQBgIa",
-    "IMG_0396.PNG",
-    34,
-    0
-  ],
-  [
-    "12rSJxUYwq7l_WSJ7OEg3qDuRqTZeagd8",
-    "082_巴可可_Twitch.png",
-    35,
-    0
-  ],
-  [
-    "1mMp8pBL0gTDuswDO0bu1Uf20JU15eMFP",
-    "082_巴可可.png",
-    35,
-    0
-  ],
-  [
-    "1Pqo0_lGyooxdf2pFN0HgXVq6ruMcIbKX",
-    "FurYCH - 塗鴉頭像驚喜包 - 巴特勒．棕響.png",
-    36,
-    0
-  ],
-  [
-    "1TZHkkBDO07JzSm3YxkCU3yVrpN_dIGRr",
-    "16(3).png",
-    37,
-    0
-  ],
-  [
-    "1F4lRBuk7xG59Y1t-YF_NtjUZQEu5jrTp",
-    "IMG_3552.JPG",
-    38,
-    0
-  ],
-  [
-    "1s3YXaFQkV2aBxj_wzpYdRJVzRfnDZAu7",
-    "沒字ㄉ.png",
-    39,
-    0
-  ],
-  [
-    "1GnVP0KnReJHeu0T-GGMw2buoDLSfuZhC",
-    "Commission for 巴特(1080p).png",
-    40,
-    0
-  ],
-  [
-    "1Hyhkn81iJF4T3adcaIhT0bWprDXplagr",
-    "Commission for 巴特(4K).png",
-    40,
-    0
-  ],
-  [
-    "147FeF29PKPYmKH1IkfcTDrzs3NfBc67l",
-    "Commission for 巴特(S).png",
-    40,
-    0
-  ],
-  [
-    "1gXKRvwaG0lMnONxtn-xl7IxFzFX3Wylb",
-    "IMG_0958.JPG",
-    41,
-    0
-  ],
-  [
-    "1XHyS-lVVBsALqVHlCnxv7PeMKQHZzEBI",
-    "IMG_0384.JPG",
-    42,
-    0
-  ],
-  [
-    "1yMYioszT2Bg48FLSEbRq4eCnktz2zbhk",
-    "巴特.png",
-    43,
-    0
-  ],
-  [
-    "1jKWoy7KrsesXW0CSaTwSTOlNmUExHQse",
-    "Butlie_BR.png",
-    44,
-    0
-  ],
-  [
-    "18f222Lw-O1UUGfZyni2XadOcaCl0c171",
-    "IMG_1012.PNG",
-    45,
-    0
-  ],
-  [
-    "1WjF1PKKTi67smH4QTvHTwLB1AU51H9aa",
-    "IMG_1013.PNG",
-    45,
-    0
-  ],
-  [
-    "1GhUrQy22g7W8A9Pqib--6L23eapmWU3C",
-    "IMG_3021.JPG",
-    46,
-    1
-  ],
-  [
-    "132Pjk4CQLFZYmy5vXWfypjW47U18OGah",
-    "ButlieBR.jpg",
-    47,
-    1
-  ],
-  [
-    "1E39R6lVA0R1u8rECZY4pz5b8xJvaMNIN",
-    "ButlieBR.png",
-    47,
-    1
-  ],
-  [
-    "1lGenyDlTazfN3X5_eOr77jCqh9wnMp2z",
-    "ButlieBR2.png",
-    47,
-    1
-  ],
-  [
-    "1TF9uNxglRjnaYl299qZawu1j-KUNOeFv",
-    "IMG_6186.JPG",
-    47,
-    1
-  ],
-  [
-    "1KCEMq86ZdolSbJN8lLMBE0IzzQOiqjLX",
-    "IMG_1749.JPG",
-    48,
-    1
-  ],
-  [
-    "1uSYY79t1_NXifvj1gcJUesoOMe-BOF5m",
-    "2024.03.11.PNG",
-    49,
-    1
-  ],
-  [
-    "1JsZuuL-1u0DSJZ5vFqzhazliMo0lbaPY",
-    "IMG_2510.JPG",
-    49,
-    1
-  ],
-  [
-    "1bGaTBd5o7EVVKMOkJUUmqG2NP6oaLJ4-",
-    "棕響行李箱PNG.png",
-    50,
-    1
-  ],
-  [
-    "1FgXBr1kpZeHlZO0Lra7653_YkoiQXvTQ",
-    "IMG_0008.JPG",
-    51,
-    1
-  ],
-  [
-    "1Vf4dpNzpGI8mqCfM3Gthr_78fiiL_vC8",
-    "IMG_0337.JPG",
-    51,
-    1
-  ],
-  [
-    "1t6j7GfJyL9MdHUT0lpgYuboouSP955Jj",
-    "227.jpg",
-    52,
-    1
-  ],
-  [
-    "1K_R1M9n9irpPYwFPHApo10_yTNOTdOWF",
-    "ezgif-83b0f6305807f64b.gif",
-    53,
-    1
-  ],
-  [
-    "1v_aUNPIekSE2FRKMhbOp5SKzadnf8k6l",
-    "ezgif-869f2e2b83d889f0.gif",
-    53,
-    1
-  ],
-  [
-    "1nwR_lnPvK9SZ-0RPEhsM7EhzmT0qngdF",
-    "ezgif-8f6d9e210f9efb3a.gif",
-    53,
-    1
-  ],
-  [
-    "1cbJUtqZJIvgDSH4N7zlDY5dpdyMW5_0f",
-    "2023.11.08 張信元.jpg",
-    54,
-    1
-  ],
-  [
-    "1EeW34GplKYiHONA90fEtMrtv2ZU_snJj",
-    "BTL.jpg",
-    55,
-    1
-  ],
-  [
-    "1DbN-2ezusL1a2dLwUaEL-akWxoOL159P",
-    "IMG_0026.JPG",
-    56,
-    1
-  ],
-  [
-    "1A5cXbQlXqXjs7buMLn9vItUVxT28fEqw",
-    "IMG_9394.PNG",
-    56,
-    1
-  ],
-  [
-    "1J1rwZE-tKCQ2cK7z7C3PLq8VDuU7_Du8",
-    "棕.png",
-    57,
-    1
-  ],
-  [
-    "1GQxgRi4Ctl7oLbdqCijJuZyvln8q1mji",
-    "IMG_5440.JPG",
-    57,
-    1
-  ],
-  [
-    "1m9uUNhAWtuqM5hUSG2sxovkaWdSmjLbY",
-    "IMG_8486.JPG",
-    58,
-    1
-  ],
-  [
-    "1htd-Nr5BFu_dRNawiCczBPi9iEYRsGv3",
-    "290424849_5415665841827277_5212758154766203103_n.jpg",
-    16,
-    1
-  ],
-  [
-    "14MT1FRyUIDv-ejuVwtcBp4sFEiUNubb3",
-    "photo_2023-03-06_23-31-10.jpg",
-    59,
-    1
-  ],
-  [
-    "1zY81hzIKXJAHtbApm29JE66sAXaooKG6",
-    "IMG_1350.JPG",
-    60,
-    1
-  ],
-  [
-    "1xzCrcbFqRP_4CZ96BDittrKWHeVJBnKw",
-    "DBD亞軍圖-巴特勒1.jpg",
-    61,
-    1
-  ],
-  [
-    "18wIsEPcBarfWfRbnZfarnRfX1r1-x1k5",
-    "DBD亞軍圖-巴特勒2.jpg",
-    61,
-    1
-  ],
-  [
-    "10IxomMHdjRGpH5aoVaGdlL853WiF8cqI",
-    "IMG_5880.JPG",
-    62,
-    1
-  ],
-  [
-    "1T_pBPvGOS5exNogpvfWIv93LRE22hGBY",
-    "2023.06.23 海豚翔贈圖",
-    63,
-    1
-  ],
-  [
-    "1OKOUDRUgqXGrqjrF2Yjm5n9LeZRmg6-z",
-    "2023.09.01 里歐贈圖",
-    63,
-    1
-  ],
-  [
-    "1sjLQbzEyR2eW4Rqj3vu5c66GMdbfSw_4",
-    "2024.03.15",
-    63,
-    1
-  ],
-  [
-    "1ME7kikJ88PZXwwRCtnQyKrFJnIArQstZ",
-    "IMG_0299.JPG",
-    64,
-    1
-  ],
-  [
-    "1nqa4CD9itlorerrA4wUt6KvSUMpLS32T",
-    "P0425-棕響.png",
-    65,
-    1
-  ],
-  [
-    "1c2jtOErQtBWp9qx88vowOZmVcD1qA7j_",
-    "2023.12.2_DC_.png",
-    66,
-    1
-  ],
-  [
-    "1DU06HtE7kYEhQFVMceb2H8_vNybtz1G7",
-    "棕響跳跳A.png",
-    67,
-    1
-  ],
-  [
-    "1WLnBXxbkMFULacTysWbGZwH0t19xtkzJ",
-    "棕響跳跳B.png",
-    67,
-    1
-  ],
-  [
-    "1Vf6oetH2rGwrycBhmt4FY-uaa8dSited",
-    "巴特勒_棕響.PNG",
-    68,
-    1
-  ],
-  [
-    "1fdbeNthfdfBvlgM9TfWXmrPDA2KiskUs",
-    "IMG_3510.JPG",
-    69,
-    1
-  ],
-  [
-    "17c1YXPma2bcPF2Xa3JsQdvK_BSf3WMYv",
-    "photo_2022-03-06_02-22-16.jpg",
-    70,
-    1
-  ],
-  [
-    "1yZbO5gFjcaweRz35qjlBX2Wm4jOH3Hg5",
-    "IMG_6645.PNG",
-    71,
-    1
-  ],
-  [
-    "1h8BJ-xV62v6DiWFgNjA13HCmzPf5vF30",
-    "IMG_1033.JPG",
-    39,
-    1
-  ],
-  [
-    "1nLUWSy3AMBLVo5lG4xAINieVxWONCE4L",
-    "IMG_1746.JPG",
-    39,
-    1
-  ],
-  [
-    "1ARH3pzw0pKt8NeT_ULuJ_JQN_C50rh3Q",
-    "2047917-1.output.png",
-    72,
-    2
-  ],
-  [
-    "1ywQElm8rxYc5vEnhlnElIwWqAL0jUgTw",
-    "2047917-2.output.png",
-    72,
-    2
-  ],
-  [
-    "1ZgSpDrhM0U69kfE4HSf8dht13o4k_LUp",
-    "2047917-3.output.png",
-    72,
-    2
-  ],
-  [
-    "1OowKwC7l2T9-lnwn2I8w8YL0vWa6kfdV",
-    "2047917-4.output.png",
-    72,
-    2
-  ],
-  [
-    "1mvBot2dASVt_7fH7pHPLcFbeipXeuOxZ",
-    "IMG_8885.PNG",
-    73,
-    2
-  ],
-  [
-    "1rSvpwfx--Iw0giXRDIuZ_fJeBJx8p7RW",
-    "IMG_8886.PNG",
-    73,
-    2
-  ],
-  [
-    "14v2pqGCrZJRpY-yAxplEW7gNaIVXmU3z",
-    "3195810-1.output.png",
-    74,
-    2
-  ],
-  [
-    "1G6N3mO461l4l24f6mFfjWAUiiGCnvcc7",
-    "2024.01.08.png",
-    75,
-    2
-  ],
-  [
-    "1i-v5QkgMykcPxUEn7YbcoGgNu4ANa-7J",
-    "2024.01.08(去背).png",
-    75,
-    2
-  ],
-  [
-    "1xuGcIWfcKvuFebkp3dG-HoC0a899QCLk",
-    "2024.01.08(無簽名).png",
-    75,
-    2
-  ],
-  [
-    "1RL3j3COeqtXNodwKbA6kxtPXmzLYIepi",
-    "2804969-1.output.png",
-    76,
-    2
-  ],
-  [
-    "1PotAjVl-PlcwE6GgcWEaTGSPVvhbIjh1",
-    "2804969-2.output.png",
-    76,
-    2
-  ],
-  [
-    "1BCOxEuhKx2rLXgKqd5geO3oo9bSom0pP",
-    "2106520-1.output.png",
-    77,
-    2
-  ],
-  [
-    "1dHca9ZklRJBUE72Y1ZSpQYFtlyNycv0B",
-    "2106520-2.output.png",
-    77,
-    2
-  ],
-  [
-    "15AHL0wOxH0bvSuLrcjqawuHQkkCKYmXP",
-    "1790490-1.output.png",
-    78,
-    2
-  ],
-  [
-    "1vSgL1izdtj9LT3vFip34eXrgbur6OzYy",
-    "1902282-1.output.png",
-    79,
-    2
-  ],
-  [
-    "1592E_N4P_p9aelor9SWDkPa3wS3v6zzx",
-    "2058156-1.gif",
-    80,
-    2
-  ],
-  [
-    "1_Ppo2wOrahebMUPuUQ8r7QXtFcf9szbE",
-    "2058156-2.gif",
-    80,
-    2
-  ],
-  [
-    "19bRTIrpQRKnFmhfg5OqzVIXsfyr66B9W",
-    "2058156-3.gif",
-    80,
-    2
-  ],
-  [
-    "1fzedb2nbeuBxF3VSLiw7JsIGWUR7V7Z1",
-    "2023.12.15-1.jpg",
-    81,
-    2
-  ],
-  [
-    "1rWOIQNdBj7Ffmck2O5Nf0oT5jwCA7esj",
-    "2023.12.15(無簽名版).jpg",
-    81,
-    2
-  ],
-  [
-    "1MmGFu5H4Z0vblNG_IbgQPWtCFTRpva4T",
-    "2179942-1.png",
-    82,
-    2
-  ],
-  [
-    "178BA4uKkV7FtWIli1V_LO_O5QqsSH25w",
-    "1964253-1.output.png",
-    83,
-    2
-  ],
-  [
-    "13v1an8MWxBrJgUQnRz_tfu4MRsd5-xEd",
-    "1964253-2.output.png",
-    83,
-    2
-  ],
-  [
-    "1k7i3EY8X51xNWgRFcuOGtE-9axVlvtpe",
-    "2198470-1.png",
-    83,
-    2
-  ],
-  [
-    "1lQC2BQEJJga_Q4ysd4L4O7VfA0HoXgf_",
-    "2926215-1.png",
-    83,
-    2
-  ],
-  [
-    "1W1iTYYnfpwFh2ZlAApp4W_SHPIF5x66a",
-    "2904061-1.png",
-    84,
-    2
-  ],
-  [
-    "1EydzyyxzvJkV1089wjbhQ6N65y9cdZNT",
-    "2904061-2.png",
-    84,
-    2
-  ]
+  ["1c3LDqhhzXCCgoM2xUpvKLAZxRxcLk8EE", "夜晚_完稿.png", 0, 0],
+  ["1Bj4rJn09SR0YgBmhQGPxpJp02odj6qCg", "15. 巴特.png", 1, 0],
+  ["1FI-NtPEJCTPysyb8jRkFrXAVTXpQyja9", "2.巴特.png", 1, 0],
+  ["1SIqQXAm-fl16_jPAQTyBGZIlUNPROqH6", "IMG_5087.JPG", 2, 0],
+  ["1yaC4aUZ-wu4xzgZ9630EmMTRLz92Ya8U", "IMG_0144.PNG", 3, 0],
+  ["1QZQ7gA5GxDgvLzd0r9UxQPXObrOTEqZi", "IMG_0145.PNG", 3, 0],
+  ["1lX9R8lCCDEJ02Ad7-t2TytcDOwvoM4pA", "IMG_4162.PNG", 3, 0],
+  ["1cWaAkAwK-YJxIdgpknlT7IZMaslUt1PN", "IMG_4163.PNG", 3, 0],
+  ["1NA5Psbd3NHlJPiuZnecKp8vc0tpZNmV4", "IMG_8522.PNG", 4, 0],
+  ["1HN3BegJlUavRTNi_GvLz6dPe49KWIMFq", "IMG_8523.PNG", 4, 0],
+  ["117pmrNsXI-S-xF0ksyVkj8oWljuCY6GJ", "IMG_8524.PNG", 4, 0],
+  ["1d-bZhTyr9IKc3uTOWrAZbAC_GHvN3foA", "IMG_8525.PNG", 4, 0],
+  ["1ut05_v704u3Bz0Q0wHDPiISv8ZmIpU6f", "IMG_8526.PNG", 4, 0],
+  ["12Ud1JHyHTNscrVTnr6L_6p5yfKGD8fer", "IMG_8527.PNG", 4, 0],
+  ["1ATS5VfpsVBiE4Q-bK-OKEL0PoFq8M7KI", "驚喜包委託-巴特.jpg", 5, 0],
+  ["12WT3gDYRllKprHiEu0Dztquo1ya_yI_J", "FurYCH - 像素頭像 - 巴特勒．棕響.png", 6, 0],
+  ["1-IU94f8HRUJQkRlX6jDRf0hzZBmXinxK", "FurYCH - 頭圖驚喜包 - 巴特勒．棕響.png", 7, 0],
+  ["1I2bELHJq0HiMYQ4oqMJ2MOEejyKbxJAx", "巴特_表情1_微醺(完稿).png", 8, 0],
+  ["1dL8NjBuGbSd72w0DszNOTotP2eSR2z7_", "巴特_表情2_高興而哭(完稿).png", 8, 0],
+  ["1C_MUN-VMYtnZtZLfUD39XxlQl9zvIt5i", "巴特_表情3_拖手微笑(完稿).png", 8, 0],
+  ["1Thz3WDrj6TkLTKP_L9ryAID-eCG_O26o", "2023.08.02", 9, 0],
+  ["1FSOYpsGqhPm2QDtbO0q2HC14atmLQcAg", "到海邊鬆一下_YCH_巴特.jpeg", 9, 0],
+  ["1s13CI5AKv3Tj6QRhR3lAU8U30eIGWMQ1", "屌虐_巴特.png", 9, 0],
+  ["1jFfJEEhItb3v8Mn7WXH6AVaYz1H9kYmu", "IMG_3532.JPG", 10, 0],
+  ["1nIUtrOUp4jFW5A_Pl7IPtyE2LApUD5Cu", "貼圖1.png", 11, 0],
+  ["13PZwT_kSpz_c8PkGRN9BG9HddXi4rzIj", "貼圖2.png", 11, 0],
+  ["1Af0Gw-yJ5v_tSpqYraMzmsHvoezsmiz3", "貼圖3.png", 11, 0],
+  ["1fdV_5qccS5KyQzycV97QPUGHn45ifhM5", "貼圖4.png", 11, 0],
+  ["1ktyTuf5uxqsEYzuofdiGmTRRJFUA0rW-", "貼圖5.png", 11, 0],
+  ["1cBNXLidYIKvLmHUcmzYJHYONC1G0A732", "塗鴉13(27.2).png", 11, 0],
+  ["1fa-s7uByUrNUoOmOxihTIOaf0QTSEP6H", "塗鴉13(28.1).png", 11, 0],
+  ["1s3JWJNGP1bFW1f6vRgT9MFaGNAyZ1epY", "IMG_0853.PNG", 11, 0],
+  ["14Tb7nEmo1CASf7Jvy-yrNeRtA2e_3T-D", "IMG_0855.PNG", 11, 0],
+  ["1tp7wYzpX-JV5X4Z2KIKxioBil8gyC1ej", "巴特委託.png", 12, 0],
+  ["1nyx9n2GR6TxcTs3P4S5tRmwXgEeE0hhI", "委託.png", 12, 0],
+  ["174CseXyMPvgNU6nfD7Rubp05RPa-Ylyp", "export202205252158288520.png", 12, 0],
+  ["1MA7zLR6fPOKLvqcratJ7N1zuO2DQsaq9", "1.png", 13, 0],
+  ["1yHRR7h5y77bRgbcUvXISmtWNBERXsqne", "2.png", 13, 0],
+  ["1RBGmnPblB1_fL3B87U-ZP6Yf8SeS2O8o", "插圖27.gif", 14, 0],
+  ["1TohQIr_xbrBn1K0QXFSk0YdjU5-M4DXg", "巴特.png", 15, 0],
+  ["1SubhuzTBsSLp8JI4gKI5q9RVy4wUdZ7y", "巴特頭圖.png", 15, 0],
+  ["1WtBtYHSm9Cg9iIrCZxDUmmBaDkdceqA3", "Long.png", 15, 0],
+  ["1D24MVRVZODzIHpKjD9yWdpsO6VJ_DtED", "巴特 A.png", 16, 0],
+  ["1wDONol6-wNa7f-PEOajA2IgvjZx_4Xa6", "巴特 B.png", 16, 0],
+  ["1mkWnDOuJmBRqLA7FHp3yDK8NdE1bYrcT", "巴特.png", 16, 0],
+  ["15cVIqIOBE-cyaZdETyx3sFr5uUCWU7oq", "IMG_4094.PNG", 16, 0],
+  ["1fljogBDvG3VUYm_Den0UZ_RaDnkSF4wP", "003.png", 17, 0],
+  ["1iP49oDfQLgCmB_aSeZgkxbuYcbdJe0K9", "半身.jpg", 17, 0],
+  ["1XrI49axlSBo73-Q1JoXk4q-UWwWTKHKV", "插圖3.png", 17, 0],
+  ["1a_VVXrsyWl1kE2YhJm6Ds8bUb4mu0FLA", "IMG_5752.PNG", 18, 0],
+  ["1Gb1bDsKYL0jFiQaMxxRTeF0IRUBvxbwP", "巴特g.gif", 19, 0],
+  ["1DePIYWP9JnlhEurAktMZ8fMwYYcN2adz", "抽菸貼圖.gif", 20, 0],
+  ["1lGnK5uXHdpaGMMzhomYGR-lElO7RbS6b", "抽菸貼圖（實況貼圖用）.gif", 20, 0],
+  ["1v60lb1L_lfim45Q4uYBHKnHgKLbXm6ul", "拍手貼圖_巴特.gif", 20, 0],
+  ["1ImT7UEGWLfeGQvnpQb-XMiMe9TBaP2dD", "揮手貼圖_巴特.gif", 20, 0],
+  ["1j1PX88jKDQHDCP3A_3-VHD5bQFc236kP", "2.png", 21, 0],
+  ["1T3SIb03rsk5IdSu1R4JMBcTg_uG7vI9f", "FurYCH - 【模板】犬科親親YCH - 巴特勒．棕響.png", 22, 0],
+  ["1eU4RyqlJadF0E8pXBbAZppvdo1rJbJPk", "IMG_0167.JPG", 23, 0],
+  ["1-GnNv90wuDOmg5lTSeEG8IHwzlS7sepq", "13.png", 24, 0],
+  ["11A_QpXjy2pAlZd8kwTaPnYgKLpRxgXjC", "巴特.png", 24, 0],
+  ["1E2APbomaMBsj6QxRhR2gIQU7n3P4wOS4", "IMG_7620.PNG", 25, 0],
+  ["1HVveWL_QbjjfTRPZ-UA66-QLvfsXHXhl", "IMG_7621.PNG", 25, 0],
+  ["1ICE9VvEBmUdDK2aN087kc3anlVDhmuWR", "IMG_9664.PNG", 25, 0],
+  ["1RH-7JwxqbXzkLQ5d4BCzvwJOGnYRGHrt", "FurYCH - 睡衣派對 Pajamas YCH - 巴特勒．棕響 (1).png", 26, 0],
+  ["1Kuq-1ALTxU-z31u1wnR60cZhmc2HdBaF", "FurYCH - 睡衣派對 Pajamas YCH - 巴特勒．棕響 (2).png", 26, 0],
+  ["1yNyvwY9g3HXR1DRbTM4LCmRk5vTP5hzY", "FurYCH - 睡衣派對 Pajamas YCH - 巴特勒．棕響 (3).png", 26, 0],
+  ["1DOGujG5vYiLgnXfOz9nqQHazTkxwFaxb", "FurYCH - 睡衣派對 Pajamas YCH - 巴特勒．棕響.png", 26, 0],
+  ["13X71K6S0m-n_wG2sH_DVZsAPgC6muh8B", "IMG_7917.PNG", 26, 0],
+  ["1zGSHvmE0SeSdxuYaSYV0b7k07FsyC9iZ", "IMG_9612.JPG", 27, 0],
+  ["15X2_63DpO3rkh4MpBKvDliFgZlWZ2Vlf", "91.png", 28, 0],
+  ["1YvQdOPRbYgKxnUII_nu5Tnf3KA71rQ_Y", "插圖49.png", 28, 0],
+  ["1x2qNp59xYaiOuiq5ZHKFj0OddKzpmiRo", "2024_10_獸無限模板-31-巴特勒-棕響.jpg", 29, 0],
+  ["1D3o-6GmKb-Z5swGKx6yy8ytKlEyUZRCZ", "IMG_9254.JPG", 30, 0],
+  ["15qf-PI02aqlYigV7g0CKl3mu1mCMs5Rr", "今晚 要嗎(巴特).jpg", 31, 0],
+  ["1r9WNu6bKgYvn2XsyegL7VmwpNvA_p1oI", "今晚 要嗎(巴特)+B.jpg", 31, 0],
+  ["1al1evDTEK1I_0OPx8nZMv_NYQTPOEDr8", "00034.png", 32, 0],
+  ["1S-ITCXBOE02tGwxfdOMMEzbaGApfDXkl", "IMG_8125.PNG", 33, 0],
+  ["1qN4RpefjIstNR95Qq6jXxyreZCEOSX1F", "IMG_8126.PNG", 33, 0],
+  ["1uMUIJ7pKG7mixODenk3Z2gEXpQTogu82", "IMG_8127.PNG", 33, 0],
+  ["1SeEPDPH32DvjXaFQpXdeHBDoGpyKJEmH", "IMG_8128.PNG", 33, 0],
+  ["1GevhSLjN3tgtHOYT4D3HvFHir8eWAMZn", "IMG_8129.PNG", 33, 0],
+  ["1hXjvLxk7rWVvgGjQl2PdKTYF-t3HEPLU", "IMG_0393.JPG", 34, 0],
+  ["1UQz_X3jIgkg54Sg3AB1rYUvkOm7JRbp3", "IMG_0394.JPG", 34, 0],
+  ["1RAhQEz_UzjKv5zVsVMBNcBNqncqYaQg6", "IMG_0395.PNG", 34, 0],
+  ["1Q7ZqrG0-jWNoOa1WdlycjUTI5rxQBgIa", "IMG_0396.PNG", 34, 0],
+  ["12rSJxUYwq7l_WSJ7OEg3qDuRqTZeagd8", "082_巴可可_Twitch.png", 35, 0],
+  ["1mMp8pBL0gTDuswDO0bu1Uf20JU15eMFP", "082_巴可可.png", 35, 0],
+  ["1Pqo0_lGyooxdf2pFN0HgXVq6ruMcIbKX", "FurYCH - 塗鴉頭像驚喜包 - 巴特勒．棕響.png", 36, 0],
+  ["1TZHkkBDO07JzSm3YxkCU3yVrpN_dIGRr", "16(3).png", 37, 0],
+  ["1F4lRBuk7xG59Y1t-YF_NtjUZQEu5jrTp", "IMG_3552.JPG", 38, 0],
+  ["1s3YXaFQkV2aBxj_wzpYdRJVzRfnDZAu7", "沒字ㄉ.png", 39, 0],
+  ["1GnVP0KnReJHeu0T-GGMw2buoDLSfuZhC", "Commission for 巴特(1080p).png", 40, 0],
+  ["1Hyhkn81iJF4T3adcaIhT0bWprDXplagr", "Commission for 巴特(4K).png", 40, 0],
+  ["147FeF29PKPYmKH1IkfcTDrzs3NfBc67l", "Commission for 巴特(S).png", 40, 0],
+  ["1gXKRvwaG0lMnONxtn-xl7IxFzFX3Wylb", "IMG_0958.JPG", 41, 0],
+  ["1XHyS-lVVBsALqVHlCnxv7PeMKQHZzEBI", "IMG_0384.JPG", 42, 0],
+  ["1yMYioszT2Bg48FLSEbRq4eCnktz2zbhk", "巴特.png", 43, 0],
+  ["1jKWoy7KrsesXW0CSaTwSTOlNmUExHQse", "Butlie_BR.png", 44, 0],
+
+  ["1GhUrQy22g7W8A9Pqib--6L23eapmWU3C", "IMG_3021.JPG", 45, 1],
+  ["132Pjk4CQLFZYmy5vXWfypjW47U18OGah", "ButlieBR.jpg", 46, 1],
+  ["1E39R6lVA0R1u8rECZY4pz5b8xJvaMNIN", "ButlieBR.png", 46, 1],
+  ["1lGenyDlTazfN3X5_eOr77jCqh9wnMp2z", "ButlieBR2.png", 46, 1],
+  ["1TF9uNxglRjnaYl299qZawu1j-KUNOeFv", "IMG_6186.JPG", 46, 1],
+  ["1KCEMq86ZdolSbJN8lLMBE0IzzQOiqjLX", "IMG_1749.JPG", 47, 1],
+  ["1uSYY79t1_NXifvj1gcJUesoOMe-BOF5m", "2024.03.11.PNG", 48, 1],
+  ["1JsZuuL-1u0DSJZ5vFqzhazliMo0lbaPY", "IMG_2510.JPG", 48, 1],
+  ["1bGaTBd5o7EVVKMOkJUUmqG2NP6oaLJ4-", "棕響行李箱PNG.png", 49, 1],
+  ["1FgXBr1kpZeHlZO0Lra7653_YkoiQXvTQ", "IMG_0008.JPG", 50, 1],
+  ["1Vf4dpNzpGI8mqCfM3Gthr_78fiiL_vC8", "IMG_0337.JPG", 50, 1],
+  ["1t6j7GfJyL9MdHUT0lpgYuboouSP955Jj", "227.jpg", 51, 1],
+  ["1K_R1M9n9irpPYwFPHApo10_yTNOTdOWF", "ezgif-83b0f6305807f64b.gif", 52, 1],
+  ["1v_aUNPIekSE2FRKMhbOp5SKzadnf8k6l", "ezgif-869f2e2b83d889f0.gif", 52, 1],
+  ["1nwR_lnPvK9SZ-0RPEhsM7EhzmT0qngdF", "ezgif-8f6d9e210f9efb3a.gif", 52, 1],
+  ["1cbJUtqZJIvgDSH4N7zlDY5dpdyMW5_0f", "2023.11.08 張信元.jpg", 53, 1],
+  ["1EeW34GplKYiHONA90fEtMrtv2ZU_snJj", "BTL.jpg", 54, 1],
+  ["1DbN-2ezusL1a2dLwUaEL-akWxoOL159P", "IMG_0026.JPG", 55, 1],
+  ["1A5cXbQlXqXjs7buMLn9vItUVxT28fEqw", "IMG_9394.PNG", 55, 1],
+  ["1J1rwZE-tKCQ2cK7z7C3PLq8VDuU7_Du8", "棕.png", 56, 1],
+  ["1GQxgRi4Ctl7oLbdqCijJuZyvln8q1mji", "IMG_5440.JPG", 56, 1],
+  ["1m9uUNhAWtuqM5hUSG2sxovkaWdSmjLbY", "IMG_8486.JPG", 57, 1],
+  ["1htd-Nr5BFu_dRNawiCczBPi9iEYRsGv3", "290424849_5415665841827277_5212758154766203103_n.jpg", 16, 1],
+  ["14MT1FRyUIDv-ejuVwtcBp4sFEiUNubb3", "photo_2023-03-06_23-31-10.jpg", 58, 1],
+  ["1zY81hzIKXJAHtbApm29JE66sAXaooKG6", "IMG_1350.JPG", 59, 1],
+  ["1xzCrcbFqRP_4CZ96BDittrKWHeVJBnKw", "DBD亞軍圖-巴特勒1.jpg", 60, 1],
+  ["18wIsEPcBarfWfRbnZfarnRfX1r1-x1k5", "DBD亞軍圖-巴特勒2.jpg", 60, 1],
+  ["10IxomMHdjRGpH5aoVaGdlL853WiF8cqI", "IMG_5880.JPG", 61, 1],
+  ["1T_pBPvGOS5exNogpvfWIv93LRE22hGBY", "2023.06.23 海豚翔贈圖", 62, 1],
+  ["1OKOUDRUgqXGrqjrF2Yjm5n9LeZRmg6-z", "2023.09.01 里歐贈圖", 62, 1],
+  ["1sjLQbzEyR2eW4Rqj3vu5c66GMdbfSw_4", "2024.03.15", 62, 1],
+  ["1ME7kikJ88PZXwwRCtnQyKrFJnIArQstZ", "IMG_0299.JPG", 63, 1],
+  ["1nqa4CD9itlorerrA4wUt6KvSUMpLS32T", "P0425-棕響.png", 64, 1],
+  ["1c2jtOErQtBWp9qx88vowOZmVcD1qA7j_", "2023.12.2_DC_.png", 65, 1],
+  ["1DU06HtE7kYEhQFVMceb2H8_vNybtz1G7", "棕響跳跳A.png", 66, 1],
+  ["1WLnBXxbkMFULacTysWbGZwH0t19xtkzJ", "棕響跳跳B.png", 66, 1],
+  ["1Vf6oetH2rGwrycBhmt4FY-uaa8dSited", "巴特勒_棕響.PNG", 67, 1],
+  ["1fdbeNthfdfBvlgM9TfWXmrPDA2KiskUs", "IMG_3510.JPG", 68, 1],
+  ["17c1YXPma2bcPF2Xa3JsQdvK_BSf3WMYv", "photo_2022-03-06_02-22-16.jpg", 69, 1],
+  ["1yZbO5gFjcaweRz35qjlBX2Wm4jOH3Hg5", "IMG_6645.PNG", 70, 1],
+  ["1h8BJ-xV62v6DiWFgNjA13HCmzPf5vF30", "IMG_1033.JPG", 39, 1],
+  ["1nLUWSy3AMBLVo5lG4xAINieVxWONCE4L", "IMG_1746.JPG", 39, 1],
+
+  ["1ARH3pzw0pKt8NeT_ULuJ_JQN_C50rh3Q", "2047917-1.output.png", 71, 2],
+  ["1ywQElm8rxYc5vEnhlnElIwWqAL0jUgTw", "2047917-2.output.png", 71, 2],
+  ["1ZgSpDrhM0U69kfE4HSf8dht13o4k_LUp", "2047917-3.output.png", 71, 2],
+  ["1OowKwC7l2T9-lnwn2I8w8YL0vWa6kfdV", "2047917-4.output.png", 71, 2],
+  ["1mvBot2dASVt_7fH7pHPLcFbeipXeuOxZ", "IMG_8885.PNG", 72, 2],
+  ["1rSvpwfx--Iw0giXRDIuZ_fJeBJx8p7RW", "IMG_8886.PNG", 72, 2],
+  ["14v2pqGCrZJRpY-yAxplEW7gNaIVXmU3z", "3195810-1.output.png", 73, 2],
+  ["1G6N3mO461l4l24f6mFfjWAUiiGCnvcc7", "2024.01.08.png", 74, 2],
+  ["1i-v5QkgMykcPxUEn7YbcoGgNu4ANa-7J", "2024.01.08(去背).png", 74, 2],
+  ["1xuGcIWfcKvuFebkp3dG-HoC0a899QCLk", "2024.01.08(無簽名).png", 74, 2],
+  ["1RL3j3COeqtXNodwKbA6kxtPXmzLYIepi", "2804969-1.output.png", 75, 2],
+  ["1PotAjVl-PlcwE6GgcWEaTGSPVvhbIjh1", "2804969-2.output.png", 75, 2],
+  ["1BCOxEuhKx2rLXgKqd5geO3oo9bSom0pP", "2106520-1.output.png", 76, 2],
+  ["1dHca9ZklRJBUE72Y1ZSpQYFtlyNycv0B", "2106520-2.output.png", 76, 2],
+  ["15AHL0wOxH0bvSuLrcjqawuHQkkCKYmXP", "1790490-1.output.png", 77, 2],
+  ["1vSgL1izdtj9LT3vFip34eXrgbur6OzYy", "1902282-1.output.png", 78, 2],
+  ["1592E_N4P_p9aelor9SWDkPa3wS3v6zzx", "2058156-1.gif", 79, 2],
+  ["1_Ppo2wOrahebMUPuUQ8r7QXtFcf9szbE", "2058156-2.gif", 79, 2],
+  ["19bRTIrpQRKnFmhfg5OqzVIXsfyr66B9W", "2058156-3.gif", 79, 2],
+  ["1fzedb2nbeuBxF3VSLiw7JsIGWUR7V7Z1", "2023.12.15(無簽名版).jpg", 80, 2],
+  ["1rWOIQNdBj7Ffmck2O5Nf0oT5jwCA7esj", "2023.12.15-1.jpg", 80, 2],
+  ["1MmGFu5H4Z0vblNG_IbgQPWtCFTRpva4T", "2179942-1.png", 81, 2],
+  ["178BA4uKkV7FtWIli1V_LO_O5QqsSH25w", "1964253-1.output.png", 82, 2],
+  ["13v1an8MWxBrJgUQnRz_tfu4MRsd5-xEd", "1964253-2.output.png", 82, 2],
+  ["1k7i3EY8X51xNWgRFcuOGtE-9axVlvtpe", "2198470-1.png", 82, 2],
+  ["1lQC2BQEJJga_Q4ysd4L4O7VfA0HoXgf_", "2926215-1.png", 82, 2],
+  ["1W1iTYYnfpwFh2ZlAApp4W_SHPIF5x66a", "2904061-1.png", 83, 2],
+  ["1EydzyyxzvJkV1089wjbhQ6N65y9cdZNT", "2904061-2.png", 83, 2]
 ];
 
 // ===== 將簡短資料轉換成完整作品資訊 =====
