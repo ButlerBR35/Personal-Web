@@ -1,0 +1,208 @@
+/* 可調整：內容寬度、格子間距、相簿封面比例 */
+:root{
+    --content-width:1440px;
+    --gap:28px;
+    --cover-ratio:3/2;
+    --accent:#c9ad87;
+    color-scheme:dark
+}
+.background,.shade{
+    position:fixed;inset:0;
+    width:100%;
+    height:100%;
+    pointer-events:none
+}
+.background{
+    object-fit:cover;
+    z-index:-2
+}
+
+/* 全螢幕背景黑色遮罩 */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* 文字與相簿放在遮罩上方 */
+body > header,
+body > main,
+body > footer {
+  position: relative;
+  z-index: 2;
+}
+
+*{
+    box-sizing:border-box
+}
+
+body{
+    margin:0;
+    background:#111416;
+    color:#f4f0e9;
+    font-family:Arial,"Microsoft JhengHei",sans-serif}
+
+a{color:inherit;text-decoration:none}
+
+header{
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    padding:26px 5vw;
+    border-bottom:1px solid #ffffff20;
+    font-size:14px
+}
+
+main{
+    max-width:var(--content-width);
+    margin:auto;
+    padding:65px 5vw
+}
+
+h1{
+    font-size:clamp(30px,4vw,56px);
+    font-weight:400;
+    margin:18px 0 30px;
+    overflow-wrap:anywhere
+}
+
+.toolbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    margin-bottom:24px;
+    color:#b1b3b5
+}
+
+#grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:var(--gap)
+}
+
+.card{
+    display:block;
+    min-width:0;
+    background:#1b1f22;
+    border:1px solid #ffffff18;
+    border-radius:12px;
+    overflow:hidden;
+    transition:transform .2s,border-color .2s
+}
+
+.card:hover{
+    transform:translateY(-4px);
+    border-color:var(--accent)
+}
+
+.card img{
+    display:block;
+    width:100%;
+    aspect-ratio:var(--cover-ratio);
+    object-fit:cover
+}
+
+.card h2{
+    font-size:20px;
+    margin:20px 20px 10px
+}
+
+.card p{
+    margin:0 20px 22px;
+    color:#b1b3b5
+}
+
+.photo{
+    padding:0;cursor:pointer
+}
+
+.photo img{
+    aspect-ratio:4/3
+}
+
+.photo:focus-visible,a:focus-visible,button:focus-visible{
+    outline:3px solid var(--accent);
+    outline-offset:3px
+}
+
+button{
+    font:inherit;
+    color:inherit;
+    background:#24282c;
+    border:1px solid #ffffff40;
+    padding:12px 18px;
+    border-radius:8px;
+    cursor:pointer
+}
+
+button:disabled{
+    opacity:.3;
+    cursor:default
+}
+
+dialog{
+    width:96vw;
+    max-width:1500px;
+    height:94vh;
+    max-height:94vh;
+    background:#0d0f11;
+    border:1px solid #ffffff30;
+    padding:50px 20px 20px;
+    border-radius:12px
+}
+
+dialog::backdrop{
+    background:#000d
+}
+
+#large{
+    width:100%;
+    height:calc(100% - 85px);
+    object-fit:contain
+}
+
+#close{
+    position:absolute;
+    top:8px;right:12px
+}
+
+.controls{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:24px
+}
+
+#error{
+    text-align:center;
+    margin:6px
+}
+
+body:has(dialog[open]){
+    overflow:hidden
+}
+
+[hidden]{
+    display:none!important
+}
+
+@media(max-width:900px){
+    #grid{
+        grid-template-columns:repeat(2,minmax(0,1fr))
+    }
+}
+
+@media(max-width:550px){
+    #grid{grid-template-columns:1fr
+    }
+    main{
+        padding-top:35px
+    }
+    .controls{
+        gap:12px;font-size:13px
+    }
+}

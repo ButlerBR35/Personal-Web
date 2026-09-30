@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-Hant">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>攝影作品｜巴特</title>
+        <link rel="stylesheet" href="photos.css">
+        <script src="albums.js" defer></script>
+        <script src="photos.js" defer></script>
+    </head>
+    <body>
+    <video class="background" autoplay muted loop playsinline aria-hidden="true">
+        <source src="巴特委託公開版.mp4" type="video/mp4">
+    </video>
+        <header>
+            <a href="../index/index.html">← 返回首頁</a>
+        </header>
+        <main>
+            <h1 id="title">攝影作品</h1>
+            <div class="toolbar">
+                <a id="back" href="#" hidden>← 全部相簿</a>
+                <p id="count" role="status"></p>
+            </div>
+            <div id="grid"></div>
+            <noscript>請啟用 JavaScript 以瀏覽相簿。</noscript>
+        </main>
+        <dialog id="viewer" aria-label="照片檢視">
+            <button id="close" aria-label="關閉">✕</button>
+            <img id="large" alt="">
+            <p id="error" role="status"></p>
+            <div class="controls">
+                <button id="prev">← 上一張</button>
+                <span id="position" aria-live="polite"></span>
+                <button id="next">下一張 →</button>
+            </div>
+        </dialog>
+    </body>
+</html>

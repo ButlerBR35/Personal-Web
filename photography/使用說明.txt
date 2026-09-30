@@ -1,0 +1,27 @@
+攝影相簿網站（Google 相簿匯出 ZIP 匯入版）
+
+1. 將 photography 整個資料夾放在首頁 index.html 旁。
+2. 安裝 Python 3（包含 py launcher），在命令提示字元執行：
+   py -3 -m pip install Pillow
+3. 雙擊 import.bat，選擇完整「照片.zip」，確認後等待處理完成。
+4. 雙擊 photos.html 就能瀏覽。不需要網站伺服器。
+5. 首頁攝影作品連結改為：
+   <a href="photography/photos.html">攝影作品</a>
+
+檔案：photos.html、photos.css、photos.js 為頁面；albums.js 為自動生成清單；images 為生成的照片副本。
+若首頁實際位置不同，修改 photos.html 的 ../index.html。
+CSS 最上方有內容寬度、格子間距、相簿封面比例的調整變數。
+
+本包未預載實際照片。必須先匯入你電腦中的 ZIP。
+照片.zip 中每個含圖片的資料夾會變成相簿，名稱使用該資料夾名稱，照片依檔名自然排序。
+支援 JPG/JPEG/PNG/WebP；其他格式不會匯入。遇到損壞的支援格式圖片會停止，原網站不更新。
+以每張原圖產生 640px 縮圖與最長邊 2200px 的展示圖，原 ZIP 不會被修改。
+相簿封面是排序第一張。網站不展示檔案名稱。
+
+更新時請重新選完整的總合集 ZIP：它將取代網站全部相簿，不是單本增量合併。
+先關閉編輯器中的 albums.js。舊 images 和 albums.js 會存入 backups。
+復原：將指定備份裡的 images 與 albums.js 複製回 photography 取代目前版本。
+要上傳公開網站，只需 HTML/CSS/JS 與 images，不需上傳 backups 或本機工具。
+Google 相簿新增或刪除照片後，需重新匯出並匯入；此工具不會自動連線 Google 相簿。
+
+已驗證 JavaScript 語法與測試 ZIP 匯入；未在你的 Windows 電腦上驗證介面。
