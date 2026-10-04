@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>繪圖作品 · 巴特</title>
+
+  <link rel="stylesheet" href="drawing.css">
+  <script src="drawing.js" defer></script>
+</head>
+
+<body>
+  <!-- 若影片位置不同，修改這裡 -->
+  <video class="background" autoplay muted loop playsinline
+         aria-hidden="true">
+    <source src="../index/巴特委託公開版.mp4" type="video/mp4">
+  </video>
+
+  <div class="shade" aria-hidden="true"></div>
+
+  <header class="page-header">
+    <a href="../index/index.html">← 返回首頁</a>
+
+    <h1>
+      <span>繪圖作品</span>
+      <small lang="en">ILLUSTRATIONS</small>
+    </h1>
+  </header>
+
+  <main>
+    <div class="toolbar">
+      <p id="status" role="status">準備讀取作品…</p>
+
+      <div class="actions">
+        <select id="folder-filter" aria-label="選擇資料夾">
+          <option value="">全部資料夾</option>
+        </select>
+
+        <button id="refresh" type="button">更新作品</button>
+      </div>
+    </div>
+
+    <div id="gallery" class="gallery"></div>
+
+    <noscript>請啟用 JavaScript 以讀取繪圖作品。</noscript>
+  </main>
+
+  <dialog id="viewer" aria-label="繪圖作品大圖">
+    <button id="close" class="close" type="button"
+            aria-label="關閉大圖" autofocus>✕</button>
+
+    <!-- 圖片載入提示 -->
+<div id="image-loading" role="status" hidden>
+  <span class="image-spinner" aria-hidden="true"></span>
+  <span>圖片載入中…</span>
+</div>
+
+<img id="large-image" alt="">
+    <p id="image-error" role="status"></p>
+
+    <div class="viewer-controls">
+      <button id="previous" type="button">← 上一張</button>
+      <span id="counter" aria-live="polite"></span>
+      <button id="next" type="button">下一張 →</button>
+    </div>
+  </dialog>
+</body>
+</html>

@@ -1,0 +1,385 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  /* 背景壓黑程度：0 不壓黑，1 全黑 */
+  --background-darkness: 0.75;
+
+  /* 作品區最大寬度與間距 */
+  --gallery-width: 1500px;
+  --gallery-gap: 28px;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #111;
+  color: #f4f0e9;
+  font-family: Arial, "Microsoft JhengHei", sans-serif;
+}
+
+.background,
+.shade {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.background {
+  z-index: 0;
+  object-fit: cover;
+}
+
+.shade {
+  z-index: 1;
+  background: rgb(0 0 0 / var(--background-darkness));
+}
+
+.page-header {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  min-height: 88px;
+  padding: 16px clamp(12px, 4vw, 72px);
+  background: rgb(0 0 0 / 85%);
+  border-bottom: 1px solid #ffffff26;
+}
+
+.page-header a {
+  justify-self: start;
+  color: inherit;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.page-header h1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+}
+
+.page-header small {
+  color: #c9ad87;
+  font-size: 10px;
+}
+
+main {
+  position: relative;
+  z-index: 2;
+  width: min(var(--gallery-width), 92%);
+  margin: auto;
+  padding: 36px 0 64px;
+}
+
+.toolbar,
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.toolbar {
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+#status {
+  color: #ccc;
+  line-height: 1.7;
+}
+
+button,
+select {
+  padding: 10px 16px;
+  border: 1px solid #ffffff40;
+  border-radius: 8px;
+  background: #202326;
+  color: #fff;
+  font: inherit;
+}
+
+select {
+  max-width: 100%;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+:focus-visible {
+  outline: 2px solid #dfbf91;
+  outline-offset: 4px;
+}
+
+/* 電腦每列三張；改成 repeat(2, ...) 可變成兩張 */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gallery-gap);
+}
+
+.artwork {
+  position: relative;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #181818;
+  text-align: left;
+}
+
+.artwork img {
+  display: block;
+  width: 100%;
+
+  /* 縮圖比例；點開後會完整顯示 */
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  transition: transform 0.45s ease;
+}
+
+.artwork span {
+  display: block;
+  padding: 16px;
+  color: #dfc6a3;
+}
+
+@media (hover: hover) {
+  .artwork:hover img {
+    transform: scale(1.04);
+  }
+}
+
+/* 大圖視窗 */
+#viewer {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 64px 24px 24px;
+  border: 0;
+  background: transparent;
+  color: #fff;
+}
+
+#viewer[open] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+#viewer::backdrop {
+  background: rgb(0 0 0 / 93%);
+}
+
+#large-image {
+  display: block;
+  min-height: 0;
+  max-width: 100%;
+  max-height: calc(100dvh - 170px);
+  object-fit: contain;
+}
+
+#image-error:empty {
+  display: none;
+}
+
+.viewer-controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+.close {
+  position: absolute;
+  top: 12px;
+  right: 20px;
+}
+
+html.viewer-open {
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 550px) {
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .page-header a {
+    font-size: 12px;
+  }
+
+  .viewer-controls {
+    gap: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .artwork img {
+    transition: none;
+  }
+
+  .artwork:hover img {
+    transform: none;
+  }
+}
+
+/* 返回資料夾按鈕 */
+#back-to-folders {
+  margin: 0 0 24px;
+}
+
+#back-to-folders[hidden] {
+  display: none;
+}
+
+/* 資料夾卡片 */
+.folder-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+
+  min-width: 0;
+  min-height: 240px;
+  padding: 30px;
+
+  text-align: left;
+  background: rgba(18, 20, 23, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 12px;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.folder-icon {
+  font-size: 40px;
+  line-height: 1;
+}
+
+.folder-card strong {
+  color: #f4f0e9;
+  font-size: 24px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.folder-count {
+  color: #d8bd96;
+  font-size: 15px;
+}
+
+.folder-date {
+  margin-top: auto;
+  color: #aaa;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+@media (hover: hover) {
+  .folder-card:hover {
+    transform: translateY(-5px);
+    background: rgba(42, 43, 46, 0.95);
+    border-color: #d8bd96;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .folder-card {
+    transition: none;
+  }
+
+  .folder-card:hover {
+    transform: none;
+  }
+}
+
+/* 載入提示：放在大圖視窗中央 */
+#image-loading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+
+  color: #f4f0e9;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  pointer-events: none;
+}
+
+#image-loading[hidden] {
+  display: none;
+}
+
+/* 旋轉圖示 */
+.image-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #dfbf91;
+  border-radius: 50%;
+  animation: image-loading-spin 0.8s linear infinite;
+}
+
+@keyframes image-loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 新圖片載入前，隱藏上一張圖片 */
+#large-image.is-loading {
+  visibility: hidden;
+}
+
+/* 切換按鈕固定在下方，避免載入時位置跳動 */
+#viewer .viewer-controls {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image-spinner {
+    animation: none;
+  }
+}

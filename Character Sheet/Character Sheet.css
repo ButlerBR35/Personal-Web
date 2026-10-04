@@ -1,0 +1,543 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  /* 背景壓黑程度：0 不壓黑，0.5 壓黑 50%，1 全黑 */
+  --background-darkness: 0.5;
+
+  /* 導覽列高度 */
+  --header-height: 88px;
+
+  /* 導覽列左右留白 */
+  --header-padding: clamp(16px, 4vw, 72px);
+
+  /* 背景影片裁切位置：左右／上下 */
+  --video-position: 50% 50%;
+}
+
+html {
+  min-height: 100%;
+  background: #111;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100svh;
+
+  color: #fff;
+  font-family: Arial, "Microsoft JhengHei", sans-serif;
+}
+
+/* ===== 最底層：背景影片 ===== */
+.background-video {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+
+  width: 100%;
+  height: 100%;
+
+  /* 填滿畫面，保持比例並裁切多餘部分 */
+  object-fit: cover;
+  object-position: var(--video-position);
+
+  pointer-events: none;
+}
+
+/* ===== 中間層：背景壓黑 ===== */
+.background-shade {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+
+  background: rgb(0 0 0 / var(--background-darkness));
+  pointer-events: none;
+}
+
+/* ===== 最上層：導覽列 ===== */
+.page-header {
+  position: relative;
+  z-index: 2;
+
+  /* 左右等寬，讓標題保持在整個畫面的正中央 */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+
+  min-height: var(--header-height);
+  padding: 14px var(--header-padding);
+
+  /* 導覽列本身壓黑 85% */
+  background: rgba(0, 0, 0, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* 左側返回首頁 */
+.home-link {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: start;
+
+  color: #f4f0e9;
+  font-size: 14px;
+  line-height: 1.6;
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+.home-link:hover {
+  color: #d8bd96;
+}
+
+.home-link:focus-visible {
+  outline: 2px solid #d8bd96;
+  outline-offset: 6px;
+}
+
+/* 中央標題 */
+.page-title {
+  grid-column: 2;
+  grid-row: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+
+  margin: 0;
+  text-align: center;
+  font-weight: 400;
+}
+
+/* 中文標題大小 */
+.title-zh {
+  font-size: 22px;
+  letter-spacing: 0.15em;
+}
+
+/* 英文標題大小與顏色 */
+.title-en {
+  color: #c9ad87;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+}
+
+/* ===== 手機版 ===== */
+@media (max-width: 600px) {
+  :root {
+    --header-height: 76px;
+    --header-padding: 12px;
+  }
+
+  .home-link {
+    font-size: 12px;
+  }
+
+  .title-zh {
+    font-size: 18px;
+  }
+
+  .title-en {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+  }
+}
+
+/* ===== 兩張設定圖：可調整的排版設定 ===== */
+.character-gallery {
+  /* 整體最大寬度：數字越大，圖片展示區越寬 */
+  --gallery-width: 1700px;
+
+  /* 兩張圖之間的距離 */
+  --gallery-gap: 36px;
+
+  /* 距離導覽列與頁面底部的留白 */
+  --gallery-padding-y: 48px;
+
+  position: relative;
+  z-index: 2;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: var(--gallery-gap);
+
+  width: min(var(--gallery-width), 92%);
+  margin: 0 auto;
+  padding: var(--gallery-padding-y) 0;
+}
+
+/* 每張設定圖的外框 */
+.character-card {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+
+  /* 調整底色透明度：0 完全透明，1 不透明 */
+  background: rgba(15, 18, 22, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+}
+
+/* 圖片完整顯示，保持原始比例 */
+.character-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* 圖片下方說明 */
+.character-card figcaption {
+  padding: 20px 24px;
+  text-align: center;
+}
+
+.character-card h2 {
+  margin: 0;
+  color: #f4f0e9;
+  font-size: clamp(20px, 2vw, 28px);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+}
+
+.character-card p {
+  margin: 8px 0 0;
+  color: #c9ad87;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+}
+
+/* 手機與窄螢幕：改成上下排列 */
+@media (max-width: 800px) {
+  .character-gallery {
+    grid-template-columns: 1fr;
+
+    --gallery-gap: 24px;
+    --gallery-padding-y: 28px;
+  }
+
+  .character-card figcaption {
+    padding: 16px;
+  }
+}
+
+/* 滿版雙圖：移除外側留白與圖片間距 */
+.character-gallery {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 0;
+
+  /* 扣除上方導覽列的高度 */
+  height: calc(100vh - var(--header-height));
+  height: calc(100svh - var(--header-height));
+}
+
+/* 每張圖的容器 */
+.character-card {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  margin: 0;
+
+  overflow: hidden;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+}
+
+/* 圖片填滿容器，超出的部分會裁切 */
+.character-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 左圖裁切位置：可調整左右、上下百分比 */
+.character-card:first-child img {
+  object-position: 50% 50%;
+}
+
+/* 右圖裁切位置 */
+.character-card:last-child img {
+  object-position: 50% 50%;
+}
+
+/* 各自圖片中央的文字框 */
+.character-card figcaption {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+
+  /* 文字框寬度與內側留白 */
+  width: max-content;
+  max-width: 85%;
+  padding: 24px 40px;
+
+  text-align: center;
+  color: #fff;
+
+  /* 0.55 控制文字框的黑色濃度 */
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 8px;
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.character-card h2 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(24px, 3vw, 48px);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+}
+
+.character-card p {
+  margin: 12px 0 0;
+  color: #e5ceb0;
+  font-size: clamp(13px, 1.2vw, 18px);
+  line-height: 1.6;
+  letter-spacing: 0.1em;
+}
+
+/* 手機維持左右二分，縮小文字框 */
+@media (max-width: 800px) {
+  .character-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    padding: 0;
+  }
+
+  .character-card figcaption {
+    padding: 18px 12px;
+    width: 85%;
+  }
+
+  .character-card p {
+    font-size: 12px;
+  }
+}\\/* 每張圖片建立獨立圖層 */
+.character-card {
+  isolation: isolate;
+
+  /* 壓黑程度：0 不壓黑，1 全黑 */
+  --image-darkness: 0.45;
+}
+
+/* 圖片上方的黑色遮罩，不影響文字框 */
+.character-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+
+  background: #000;
+  opacity: var(--image-darkness);
+  pointer-events: none;
+
+  /* 明暗變化速度 */
+  transition: opacity 0.35s ease;
+}
+
+/* 滑鼠移到哪張圖，就讓哪張圖恢復亮度 */
+@media (hover: hover) {
+  .character-card:hover::after {
+    opacity: 0;
+  }
+}
+
+/* 文字框：位於圖片中央，內容水平、垂直置中 */
+.character-card figcaption {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  text-align: center;
+}
+
+/* 清除舊間距，避免文字偏移 */
+.character-card figcaption h2,
+.character-card figcaption p {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+
+  /* 抵銷字距在行尾留下的空間，讓視覺更置中 */
+  text-indent: 0.12em;
+  letter-spacing: 0.12em;
+}
+
+/* 配合系統減少動態效果設定 */
+@media (prefers-reduced-motion: reduce) {
+  .character-card::after {
+    transition: none;
+  }
+}
+
+/* 圖片保留 75% 亮度，減輕壓暗程度 */
+.character-card {
+  --image-darkness: 0.75;
+}
+
+/* 放大後的圖片不超出自己的區域 */
+.character-card {
+  overflow: hidden;
+}
+
+/* 圖片縮放動畫 */
+.character-card img {
+  transform: scale(1);
+  transform-origin: center;
+  transition: transform 0.6s ease;
+}
+
+/* 滑鼠移入放大，移開恢復 */
+@media (hover: hover) {
+  .character-card:hover img {
+    /* 1.05 = 放大 5%，可改成 1.08 或 1.1 */
+    transform: scale(1.05);
+  }
+}
+
+/* 配合系統減少動態效果設定 */
+@media (prefers-reduced-motion: reduce) {
+  .character-card img {
+    transition: none;
+  }
+
+  .character-card:hover img {
+    transform: none;
+  }
+}
+
+/* 兩張圖片中間的分隔線 */
+.character-gallery {
+  position: relative;
+}
+
+.character-gallery::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+
+  /* 線條粗細：可改成 1px 或 3px */
+  width: 2px;
+
+  /* 線條顏色與透明度 */
+  background: rgba(255, 255, 255, 0.6);
+
+  /* 不影響圖片的滑鼠互動 */
+  pointer-events: none;
+}
+
+/* 點擊圖片的透明按鈕，由 JavaScript 加入 */
+.character-open {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.character-open:focus-visible {
+  outline: 3px solid #e5ceb0;
+  outline-offset: -6px;
+}
+
+/* 大圖開啟時，暫停背景頁面捲動 */
+html.image-viewer-open {
+  overflow: hidden;
+}
+
+/* 全螢幕透明視窗 */
+#image-viewer {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 64px 20px 24px;
+  border: none;
+  box-sizing: border-box;
+  background: transparent;
+  overflow: auto;
+}
+
+#image-viewer[open] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 視窗背後的黑色遮罩 */
+#image-viewer::backdrop {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+/* 完整顯示圖片，不裁切 */
+#viewer-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* 右上角關閉按鈕 */
+#viewer-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  z-index: 1;
+
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+
+  background: #222;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+#viewer-close:focus-visible {
+  outline: 2px solid #e5ceb0;
+  outline-offset: 4px;
+}

@@ -206,3 +206,59 @@ body:has(dialog[open]){
         gap:12px;font-size:13px
     }
 }
+
+/* 頂部導覽列：0.85 控制壓黑程度，1 是全黑 */
+body > header.photo-header {
+  position: relative;
+  z-index: 3;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  min-height: 72px;
+  padding: 16px 5vw;
+
+  background: rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.photo-header a {
+  color: #f4f0e9;
+  text-decoration: none;
+}
+
+/* 標題上方的英文小標 */
+.photo-eyebrow {
+  margin: 0 0 14px;
+  color: #c9ad87;
+
+  /* 調整英文大小及字距 */
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  line-height: 1.8;
+}
+
+/* 右上角語言選單 */
+#photo-language {
+  min-width: 108px;
+  padding: 10px 12px;
+
+  color: #fff;
+  background: #202428;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 8px;
+
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+#photo-language:focus-visible {
+  outline: 2px solid #c9ad87;
+  outline-offset: 3px;
+}

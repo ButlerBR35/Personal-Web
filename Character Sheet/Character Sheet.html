@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>設定圖 · 巴特</title>
+
+  <link rel="stylesheet" href="Character Sheet.css">
+</head>
+
+<body>
+  <!-- 背景影片 -->
+  <video
+    class="background-video"
+    autoplay
+    muted
+    loop
+    playsinline
+    aria-hidden="true"
+  >
+    <!-- 若影片在其他資料夾，請保留你目前可播放的路徑 -->
+    <source src="巴特委託公開版.mp4" type="video/mp4">
+  </video>
+
+  <!-- 背景壓黑 -->
+  <div class="background-shade" aria-hidden="true"></div>
+
+  <!-- 導覽列：只放返回首頁與標題 -->
+  <header class="page-header">
+    <a class="home-link" href="../index/index.html">
+      ← 返回首頁
+    </a>
+
+    <h1 class="page-title">
+      <span class="title-zh">設定圖</span>
+      <span class="title-en" lang="en">CHARACTER SHEET</span>
+    </h1>
+  </header>
+  <!-- 導覽列在這裡結束 -->
+
+  <!-- 設定圖：放在導覽列外面、下方 -->
+  <main class="character-gallery" aria-label="角色設定圖">
+    <figure class="character-card">
+      <img
+        src="巴特勒(休閒便服).PNG"
+        alt="巴特勒的休閒便服設定圖"
+      >
+
+      <figcaption>
+        <p>休閒便服</p>
+      </figcaption>
+    </figure>
+
+    <figure class="character-card">
+      <img
+        src="棕響(工作、外出).PNG"
+        alt="棕響的工作與外出設定圖"
+      >
+
+      <figcaption>
+        <p>工作・外出</p>
+      </figcaption>
+    </figure>
+  </main>
+  <!-- 放大圖片視窗 -->
+<dialog id="image-viewer" aria-label="設定圖大圖">
+  <button
+    id="viewer-close"
+    type="button"
+    aria-label="關閉大圖"
+    autofocus
+  >✕</button>
+
+  <img id="viewer-image" alt="">
+</dialog>
+
+<script src="Character Sheet.js" defer></script>
+</body>
+</html>
