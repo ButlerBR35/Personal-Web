@@ -24,11 +24,11 @@
 <!-- 頂部目錄：中央目錄＋右側語言 -->
 <header class="site-header">
   <nav class="top-nav" aria-label="主要目錄">
-    <a href="#menu-about">關於我</a>
-    <a href="#menu-character">設定圖</a>
-    <a href="#menu-collection">委託圖集</a>
-    <a href="#menu-photo">攝影作品</a>
-    <a href="#menu-art">繪圖作品</a>
+    <a href="../about/about.html">關於我</a>
+    <a href="../Character Sheet/Character Sheet.html">設定圖</a>
+    <a href="../commission/commission.html">委託圖集</a>
+    <a href="../photography/photos.html">攝影作品</a>
+    <a href="../drawing/drawing.html">繪圖作品</a>
     <a href="#menu-upcoming">暫未更新</a>
   </nav>
 
@@ -140,17 +140,26 @@
          每格現有一張圖片；要換圖可新增 class="card-image card-image-hover" 的第二張圖片。 -->
     <div class="directory-grid">
 
-      <!-- 第一格 -->
-      <button id="menu-about" class="directory-card" type="button">
-        <img class="card-image"
-             src="FurYCH - 頭圖驚喜包 - 巴特勒．棕響.png" alt="" loading="lazy">
+      <!-- 第一格：關於我 -->
+<a
+  id="menu-about"
+  class="directory-card"
+  href="../about/about.html"
+>
+  <img
+    class="card-image"
+    src="FurYCH - 頭圖驚喜包 - 巴特勒．棕響.png"
+    alt=""
+    loading="lazy"
+  >
 
-        <span class="card-content">
-          <span class="card-number">01</span>
-          <span class="card-title">關於我</span>
-        </span>
-        <span class="card-arrow" aria-hidden="true">↗</span>
-      </button>
+  <span class="card-content">
+    <span class="card-number">01</span>
+    <span class="card-title">關於我</span>
+  </span>
+
+  <span class="card-arrow" aria-hidden="true">↗</span>
+</a>
 
       <!-- 第二格：設定圖 -->
 <a

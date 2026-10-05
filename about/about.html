@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>關於我｜巴特</title>
+  <link rel="stylesheet" href="about.css">
+</head>
+
+<body>
+  <!-- 背景影片 -->
+  <video
+    class="back-video"
+    autoplay
+    muted
+    loop
+    playsinline
+    aria-hidden="true"
+  >
+    <source
+      src="../index/巴特委託公開版.mp4"
+      type="video/mp4"
+    >
+  </video>
+
+  <!-- 背景壓黑 -->
+  <div class="video-overlay" aria-hidden="true"></div>
+
+  <!-- 上方目錄 -->
+  <header class="site-header">
+    <a
+      class="home-link"
+      href="../index/index.html"
+      data-i18n="home"
+    >← 返回首頁</a>
+
+    <nav class="top-nav" aria-label="主要目錄">
+      <a
+        href="about.html"
+        aria-current="page"
+        data-i18n="about"
+      >關於我</a>
+
+      <a
+        href="../Character Sheet/Character Sheet.html"
+        data-i18n="character"
+      >設定圖</a>
+
+      <a
+        href="../commission/commission.html"
+        data-i18n="commission"
+      >委託圖集</a>
+
+      <a
+        href="../photography/photos.html"
+        data-i18n="photo"
+      >攝影作品</a>
+
+      <a
+        href="../drawing/drawing.html"
+        data-i18n="drawing"
+      >繪圖作品</a>
+
+      <a
+        href="../index/index.html#menu-upcoming"
+        data-i18n="upcoming"
+      >暫未更新</a>
+    </nav>
+
+    <div class="language-control">
+      <select id="language-select" aria-label="選擇語言">
+        <option value="zh">中文</option>
+        <option value="ja">日本語</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+  </header>
+
+  <main class="about-content">
+    <header class="about-heading">
+      <p class="page-eyebrow" lang="en">ABOUT ME</p>
+      <h1 id="about-title" data-i18n="about">關於我</h1>
+    </header>
+
+    <div class="about-layout">
+      <!-- 左側圖片：修改 src 即可更換圖片 -->
+      <figure class="about-picture">
+        <img
+          src="00034.png"
+          alt="巴特的個人形象"
+          decoding="async"
+        >
+      </figure>
+
+      <!-- 右側分類介紹 -->
+      <div class="about-text">
+
+        <!-- open 代表預設展開；刪掉即可預設收合 -->
+        <details class="about-category" open>
+          <summary data-i18n="personality">個性</summary>
+
+          <div class="category-content">
+            <ul class="personality-list">
+              <li data-i18n="online">活網仔</li>
+              <li>ENFJ-T</li>
+              <li data-i18n="furry">重度獸人控</li>
+              <li data-i18n="pisces">感性古怪雙魚</li>
+              <li data-i18n="brown">棕色最愛的顏色</li>
+              <li data-i18n="twitch">十有八九在圖奇中</li>
+              <li data-i18n="outings">不與人單獨出門逛街</li>
+              <li data-i18n="foodhunt">喜歡到處晃晃尋找美食</li>
+              <li data-i18n="expression">沒笑看起來臉臭沒在生氣</li>
+              <li data-i18n="record">紀錄生活周遭的人事物</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="about-category">
+          <summary data-i18n="favorites">主推 / 推し / 최애</summary>
+
+          <div class="category-content">
+            <ul class="favorites-list">
+              <li>
+                <span data-i18n="taiwan">台：</span>
+                <a
+                  href="https://x.com/LeoLinXi"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >燐 / 汐 ↗</a>
+              </li>
+
+              <li>
+                <span data-i18n="japan">日：</span>
+                <a
+                  href="https://x.com/codagie124"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >こだぎー ↗</a>
+              </li>
+
+              <li>
+                <span data-i18n="korea">韓：</span>
+                <a
+                  href="https://x.com/Mungto_fur"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >멍토 ↗</a>
+              </li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="about-category">
+          <summary data-i18n="interests">興趣</summary>
+
+          <div class="category-content">
+            <p data-i18n="daily">
+              日常喜歡打電動、聽音樂、逛書店、創作
+            </p>
+
+            <dl class="interest-list">
+              <div>
+                <dt data-i18n="games">遊戲</dt>
+                <dd>LOL、OW、APEX</dd>
+              </div>
+
+              <div>
+                <dt data-i18n="music">音樂</dt>
+                <dd>J-POP</dd>
+              </div>
+
+              <div>
+                <dt>J-POP</dt>
+                <dd>Mrs. GREEN APPLE、milet、Yuuri</dd>
+              </div>
+
+              <div>
+                <dt data-i18n="food">美食</dt>
+                <dd data-i18n="noodles">牛肉麵</dd>
+              </div>
+            </dl>
+          </div>
+        </details>
+
+        <details class="about-category">
+          <summary data-i18n="social">社交</summary>
+
+          <div class="category-content">
+            <p data-i18n="typing">
+              打字習慣用「= = / 0.0 / @@」、「小黃臉」來社交
+            </p>
+
+            <p data-i18n="boundary">不熟不要聊色</p>
+
+            <p>
+              <span data-i18n="contact">
+                Messenger 不常看訊息，急事私訊
+              </span>
+              <a
+                href="https://t.me/Butler_BR_35"
+                target="_blank"
+                rel="noopener noreferrer"
+              >TG ↗</a>
+            </p>
+          </div>
+        </details>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- 中／日／英語言切換 -->
+  <script>
+    (() => {
+      /*
+        翻譯設定：
+        HTML 的 data-i18n="名稱"
+        對應下方各語言的相同名稱。
+      */
+      const translations = {
+        zh: {
+          home: "← 返回首頁",
+          about: "關於我",
+          character: "設定圖",
+          commission: "委託圖集",
+          photo: "攝影作品",
+          drawing: "繪圖作品",
+          upcoming: "暫未更新",
+          navigation: "主要目錄",
+          language: "選擇語言",
+          portrait: "巴特的個人形象",
+
+          personality: "個性",
+          online: "活網仔",
+          furry: "重度獸人控",
+          pisces: "感性古怪雙魚",
+          brown: "棕色最愛的顏色",
+          twitch: "十有八九在圖奇中",
+          outings: "不與人單獨出門逛街",
+          foodhunt: "喜歡到處晃晃尋找美食",
+          expression: "沒笑看起來臉臭沒在生氣",
+          record: "紀錄生活周遭的人事物",
+
+          favorites: "主推 / 推し / 최애",
+          taiwan: "台：",
+          japan: "日：",
+          korea: "韓：",
+
+          interests: "興趣",
+          daily: "日常喜歡打電動、聽音樂、逛書店、創作",
+          games: "遊戲",
+          music: "音樂",
+          food: "美食",
+          noodles: "牛肉麵",
+
+          social: "社交",
+          typing: "打字習慣用「= = / 0.0 / @@」、「小黃臉」來社交",
+          boundary: "不熟不要聊色",
+          contact: "Messenger 不常看訊息，急事私訊"
+        },
+
+        ja: {
+          home: "← ホームへ",
+          about: "自己紹介",
+          character: "設定画",
+          commission: "依頼作品集",
+          photo: "写真作品",
+          drawing: "イラスト作品",
+          upcoming: "準備中",
+          navigation: "メインメニュー",
+          language: "言語を選択",
+          portrait: "バットのキャラクターポートレート",
+
+          personality: "性格",
+          online: "ネットに入り浸り",
+          furry: "大のケモノ好き",
+          pisces: "感受性豊かで、ちょっと風変わりな魚座",
+          brown: "好きな色は茶色",
+          twitch: "たいていTwitchにいる",
+          outings: "誰かと二人きりで買い物には行かない",
+          foodhunt: "ぶらぶら歩いて、おいしいものを探すのが好き",
+          expression: "笑っていないと不機嫌に見えるけど、怒っているわけじゃない",
+          record: "身の回りの人や出来事、ものを記録するのが好き",
+
+          favorites: "推し / 主推 / 최애",
+          taiwan: "台湾：",
+          japan: "日本：",
+          korea: "韓国：",
+
+          interests: "趣味",
+          daily: "普段はゲーム、音楽鑑賞、本屋巡り、創作を楽しんでいます。",
+          games: "ゲーム",
+          music: "音楽",
+          food: "好きな食べ物",
+          noodles: "牛肉麺",
+
+          social: "交流について",
+          typing: "チャットでは「= = / 0.0 / @@」や顔の絵文字をよく使います。",
+          boundary: "親しくない方は、下ネタや性的な話題はご遠慮ください。",
+          contact: "Messengerはあまり確認しません。急ぎの用件は、こちらにDMをお願いします："
+        },
+
+        en: {
+          home: "← Home",
+          about: "About Me",
+          character: "Character Sheets",
+          commission: "Commissions",
+          photo: "Photography",
+          drawing: "Illustrations",
+          upcoming: "Coming Soon",
+          navigation: "Main navigation",
+          language: "Select language",
+          portrait: "Bart’s character portrait",
+
+          personality: "Personality",
+          online: "Always online",
+          furry: "A huge furry fan",
+          pisces: "An emotional, quirky Pisces",
+          brown: "Brown is my favorite color",
+          twitch: "You’ll probably find me on Twitch",
+          outings: "I don’t go shopping one-on-one with others",
+          foodhunt: "I love wandering around in search of good food",
+          expression: "I may look grumpy when I’m not smiling, but I’m not angry",
+          record: "I capture the people, moments, and things around me",
+
+          favorites: "My Favorites / 推し / 최애",
+          taiwan: "Taiwan:",
+          japan: "Japan:",
+          korea: "Korea:",
+
+          interests: "Interests",
+          daily: "I enjoy gaming, listening to music, browsing bookstores, and creating.",
+          games: "Games",
+          music: "Music",
+          food: "Favorite Food",
+          noodles: "Beef noodle soup",
+
+          social: "Social Notes",
+          typing: "I often use emoticons like “= = / 0.0 / @@” and smiley emojis when chatting.",
+          boundary: "Please don’t bring up sexual topics unless we know each other well.",
+          contact: "I rarely check Messenger. For anything urgent, message me on"
+        }
+      };
+
+      const select = document.getElementById("language-select");
+
+      // 記住此頁上次選擇的語言
+      const storageKey = "bart-about-language";
+
+      function changeLanguage(language) {
+        // 不支援的語言回到中文
+        if (
+          !Object.prototype.hasOwnProperty.call(
+            translations,
+            language
+          )
+        ) {
+          language = "zh";
+        }
+
+        const text = translations[language];
+
+        document.documentElement.lang =
+          language === "zh" ? "zh-TW" : language;
+
+        select.value = language;
+
+        // 更新文字，不重建分類，保留展開／收合狀態
+        document.querySelectorAll("[data-i18n]").forEach(element => {
+          const key = element.dataset.i18n;
+          const value = text[key];
+
+          if (typeof value === "string") {
+            element.textContent = value;
+          }
+        });
+
+        // 更新輔助閱讀標籤
+        document.querySelector(".top-nav")
+          .setAttribute("aria-label", text.navigation);
+
+        select.setAttribute("aria-label", text.language);
+
+        document.querySelector(".about-picture img").alt =
+          text.portrait;
+
+        // 更新瀏覽器分頁標題
+        document.title =
+          `${text.about}｜${language === "zh" ? "巴特" : "Bart"}`;
+
+        // 瀏覽器不允許儲存時，仍可正常切換語言
+        try {
+          localStorage.setItem(storageKey, language);
+        } catch (_) {}
+      }
+
+      select.addEventListener("change", () => {
+        changeLanguage(select.value);
+      });
+
+      // 初次進入使用中文；有記錄時恢復上次語言
+      let initialLanguage = "zh";
+
+      try {
+        initialLanguage =
+          localStorage.getItem(storageKey) || "zh";
+      } catch (_) {}
+
+      changeLanguage(initialLanguage);
+    })();
+  </script>
+</body>
+</html>
